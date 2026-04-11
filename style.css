@@ -60,7 +60,7 @@ img { max-width: 100%; display: block; }
 }
 .logo__img {
   display: block;
-  height: 36px;
+  height: 44px;
   width: auto;
 }
 .logo__fire { font-size: 1.3rem; animation: flicker 2s infinite alternate; }

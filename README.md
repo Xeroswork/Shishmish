@@ -6,34 +6,51 @@
 
 ```
 shishmish/
-├── index.html   # Главна страница
-├── style.css    # Стилове
-├── app.js       # Логика на количката
-└── README.md
+├── index.html
+├── style.css
+├── fonts.css
+├── app.js
+├── README.md
+└── assets/
+    ├── logo.svg
+    └── fonts/
+        ├── Inter-Regular.woff2
+        ├── Inter-Medium.woff2
+        ├── Inter-SemiBold.woff2
+        ├── Inter-Bold.woff2
+        └── Inter-ExtraBold.woff2
 ```
 
-## Функционалности
+## ⚠️ Шрифты — нужно скачать один раз
 
-- Меню с контрол на количество
-- Автоматично изчисляване на сума
-- Поръчка директно в WhatsApp / Viber с предпопълнено съобщение
-- Responsive дизайн (mobile-first)
-- Dark тема с огнена естетика
+Шрифт **Inter** распространяется по лицензии SIL Open Font License (бесплатно).
+
+### Способ 1 — через npm (рекомендуется)
+```bash
+npm install @fontsource/inter
+```
+Скопируй из `node_modules/@fontsource/inter/files/` в `assets/fonts/` и переименуй:
+- `inter-latin-400-normal.woff2` → `Inter-Regular.woff2`
+- `inter-latin-500-normal.woff2` → `Inter-Medium.woff2`
+- `inter-latin-600-normal.woff2` → `Inter-SemiBold.woff2`
+- `inter-latin-700-normal.woff2` → `Inter-Bold.woff2`
+- `inter-latin-800-normal.woff2` → `Inter-ExtraBold.woff2`
+
+### Способ 2 — скачать вручную
+Зайди на https://github.com/rsms/inter/releases, скачай последний релиз,
+возьми WOFF2 файлы из папки `Inter Web/` и переименуй как указано выше.
 
 ## Деплой
 
-Сайтът е статичен — работи директно от `index.html` без build стъпка.
-
 ### GitHub Pages
-1. Качи файловете в GitHub репозиторий
-2. Settings → Pages → Source: `main` branch, `/ (root)`
-3. Сайтът ще бъде достъпен на `https://username.github.io/repo-name`
+1. Загрузи файлы в GitHub репозиторий
+2. Settings → Pages → Source: `main`, `/ (root)`
 
 ### Vercel / Netlify
-Просто drag & drop на папката или свържи GitHub репото.
+Drag & drop папки — работает без build шага.
 
 ## Контакти
 
-📞 +359 897 728 878  
-📍 София, България  
+📞 +359 897 728 878
+📍 София, България
 💬 Viber / WhatsApp
