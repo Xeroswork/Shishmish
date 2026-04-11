@@ -214,7 +214,11 @@ img { max-width: 100%; display: block; }
   transition: border-color var(--transition);
 }
 .badge:hover { border-color: var(--clr-gold); }
-.badge__icon { font-size: 1.8rem; }
+.badge__img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
 .badge__label {
   font-family: var(--font-heading);
   font-size: 0.75rem;
