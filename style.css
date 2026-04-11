@@ -243,8 +243,25 @@ img { max-width: 100%; display: block; }
 .menu {
   padding: 80px 0;
   background: var(--clr-surface);
-  border-top: 1px solid var(--clr-border);
-  border-bottom: 1px solid var(--clr-border);
+  position: relative;
+}
+.menu::before,
+.menu::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: 1;
+}
+.menu::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--clr-bg), transparent);
+}
+.menu::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--clr-bg), transparent);
 }
 .menu__grid {
   display: grid;
