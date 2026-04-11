@@ -525,8 +525,8 @@ img { max-width: 100%; display: block; }
   .header__inner { flex-direction: column; gap: 12px; }
 }
 .contact-item__pin {
-  width: 20px;
-  height: 20px;
+  width: 35px;
+  height: 35px;
   object-fit: contain;
   flex-shrink: 0;
 }
