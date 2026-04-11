@@ -438,7 +438,7 @@ img { max-width: 100%; display: block; }
 }
 .contact-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   font-size: 1.05rem;
 }
