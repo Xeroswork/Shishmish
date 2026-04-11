@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <!-- Flame icon -->
+  <path d="M24 52 C14 46 10 36 14 26 C16 20 20 16 22 12 C22 18 25 21 28 19 C25 26 30 30 30 36 C32 30 33 24 30 18 C36 22 40 30 38 40 C40 36 41 30 39 24 C44 30 46 40 42 48 C40 52 34 56 28 56 C26.5 56 25.1 54.7 24 52 Z" fill="#d95f0a"/>
+  <!-- Text -->
+  <text x="54" y="38" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="-0.5" fill="#ebebeb">Shish</text>
+  <text x="118" y="38" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="-0.5" fill="#787878">-Mish</text>
+</svg>
