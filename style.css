@@ -500,7 +500,7 @@ img { max-width: 100%; display: block; }
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 28px 20px 30px;
+    padding: 28px 40px 30px 20px;
     width: 100%;
     max-width: 100%;
   }
