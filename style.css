@@ -487,6 +487,9 @@ img { max-width: 100%; display: block; }
     margin-bottom: 16px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.8);
   }
+  .hero__content .btn {
+    align-self: flex-start;
+  }
 }
 
 @media (max-width: 480px) {
