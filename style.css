@@ -89,6 +89,17 @@ img { max-width: 100%; display: block; }
   align-items: center;
   overflow: hidden;
 }
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--clr-bg));
+  z-index: 1;
+  pointer-events: none;
+}
 .hero__img {
   position: absolute;
   inset: 0;
@@ -96,7 +107,7 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.75;
+  opacity: 0.6;
 }
 .hero__overlay {
   position: absolute;
@@ -181,7 +192,6 @@ img { max-width: 100%; display: block; }
 /* ===== ABOUT ===== */
 .about {
   padding: 80px 0;
-  border-top: 1px solid var(--clr-border);
 }
 .about__grid {
   display: grid;
