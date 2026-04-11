@@ -483,6 +483,7 @@ img { max-width: 100%; display: block; }
     background: rgba(13, 13, 13, 0.7);
   }
   .hero__title {
+    font-size: clamp(1.53rem, 3.8vw, 2rem);
     margin-top: auto;
     margin-bottom: 16px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.8);
