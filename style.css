@@ -175,8 +175,8 @@ img { max-width: 100%; display: block; }
 .btn--viber { background: var(--clr-viber); color: #fff; }
 .btn--viber:hover { opacity: 0.9; transform: translateY(-2px); }
 
-.btn--call { background: var(--clr-surface2); color: var(--clr-text); border: 1px solid var(--clr-border); }
-.btn--call:hover { border-color: var(--clr-gold); color: var(--clr-gold); transform: translateY(-2px); }
+.btn--call { background: #b84a00; color: #fff; border: none; }
+.btn--call:hover { background: #d95f0a; transform: translateY(-2px); }
 
 /* ===== SECTION TITLE ===== */
 .section-title {
