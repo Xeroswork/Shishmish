@@ -96,7 +96,7 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.70;
+  opacity: 0.6;
 }
 .hero__overlay {
   position: absolute;
@@ -253,7 +253,13 @@ img { max-width: 100%; display: block; }
   transition: border-color var(--transition), transform var(--transition);
 }
 .menu-card:hover { border-color: var(--clr-fire); transform: translateY(-4px); }
-.menu-card__emoji { font-size: 2.4rem; }
+.menu-card__img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #000;
+}
 .menu-card__name {
   font-family: var(--font-heading);
   font-size: 1.05rem;
