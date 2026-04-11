@@ -524,3 +524,9 @@ img { max-width: 100%; display: block; }
   .about__badges { grid-template-columns: 1fr 1fr; }
   .header__inner { flex-direction: column; gap: 12px; }
 }
+.contact-item__pin {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
