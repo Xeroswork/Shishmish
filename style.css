@@ -96,7 +96,7 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.45;
+  opacity: 0.60;
 }
 .hero__overlay {
   position: absolute;
