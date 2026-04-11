@@ -202,7 +202,7 @@ img { max-width: 100%; display: block; }
   gap: 12px;
 }
 .badge {
-  background: var(--clr-surface);
+  background: #000;
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: 16px 12px;
