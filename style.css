@@ -11,8 +11,8 @@
   --clr-whatsapp: #25d366;
   --clr-viber: #7360f2;
   --radius: 14px;
-  --font-heading: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --transition: 0.2s ease;
 }
 
@@ -63,12 +63,6 @@ img { max-width: 100%; display: block; }
   height: 44px;
   width: auto;
 }
-.logo__fire { font-size: 1.3rem; animation: flicker 2s infinite alternate; }
-.logo__text { color: var(--clr-text); }
-@keyframes flicker {
-  0%   { filter: drop-shadow(0 0 4px #e8620a88); }
-  100% { filter: drop-shadow(0 0 12px #ff8c00cc); }
-}
 .nav { display: flex; gap: 24px; }
 .nav a {
   font-family: var(--font-heading);
@@ -81,6 +75,32 @@ img { max-width: 100%; display: block; }
 }
 .nav a:hover { color: var(--clr-text); }
 
+/* ===== LANGUAGE SWITCHER ===== */
+.lang-select {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--clr-text);
+  background-color: var(--clr-surface2);
+  border: 1px solid var(--clr-border);
+  border-radius: 8px;
+  padding: 6px 30px 6px 12px;
+  cursor: pointer;
+  transition: border-color var(--transition);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23787878' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+  background-size: 11px;
+}
+.lang-select:hover { border-color: var(--clr-fire); }
+.lang-select option {
+  background: var(--clr-surface);
+  color: var(--clr-text);
+}
+
 /* ===== HERO ===== */
 .hero {
   position: relative;
@@ -88,6 +108,10 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   overflow: hidden;
+  background: var(--clr-bg);
+  /* Съдържанието на hero се вписва в границите на сайта (контейнер 960px) */
+  padding-left: max(20px, calc((100% - 960px) / 2 + 20px));
+  padding-right: max(20px, calc((100% - 960px) / 2 + 20px));
 }
 .hero::after {
   content: '';
@@ -100,30 +124,33 @@ img { max-width: 100%; display: block; }
   z-index: 1;
   pointer-events: none;
 }
+/* Изображение вдясно, наполовина по-малко.
+   mix-blend-mode: lighten слива черния фон на снимката с фона на
+   страницата, така че правоъгълните ръбове изчезват. */
+/* Голямо изображение, подравнено с десния ръб на сайта.
+   Абсолютно позициониране -> текстът вляво може леко да застъпва снимката. */
 .hero__img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: 50%;
+  right: max(20px, calc((100% - 960px) / 2 + 20px));
+  transform: translateY(-50%);
+  width: clamp(400px, 42vw, 620px);
+  height: auto;
+  object-fit: contain;
   object-position: center;
-  opacity: 0.80;
+  opacity: 1;
+  mix-blend-mode: lighten;
+  z-index: 1;
+  pointer-events: none;
 }
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(13, 13, 13, 0.97) 0%,
-    rgba(13, 13, 13, 0.75) 50%,
-    rgba(13, 13, 13, 0.25) 100%
-  );
-}
+/* Overlay-ът вече не е нужен (снимката не е фон) */
+.hero__overlay { display: none; }
+/* Текстовият блок — вляво, подравнен към линията на сайта, над снимката */
 .hero__content {
   position: relative;
-  z-index: 1;
-  padding: 0px 40px 60px;
-  max-width: 560px;
+  z-index: 2;
+  max-width: 440px;
+  padding: 40px 0;
 }
 .hero__tag {
   display: inline-block;
@@ -442,7 +469,6 @@ img { max-width: 100%; display: block; }
   gap: 12px;
   font-size: 1.05rem;
 }
-.contact-item__icon { font-size: 1.3rem; flex-shrink: 0; }
 .contact-item a { color: var(--clr-gold); }
 .contact-item a:hover { text-decoration: underline; }
 .contacts__actions {
@@ -482,41 +508,31 @@ img { max-width: 100%; display: block; }
   .total-bar { flex-direction: column; align-items: flex-start; }
   .total-bar__amount { font-size: 2rem; }
 
-  /* Hero мобильная версия */
+  /* Hero мобильная версия — стопка: текст горе, снимка долу */
   .hero {
-    min-height: 480px;
+    flex-direction: column;
     align-items: stretch;
-  }
-  .hero__overlay {
-    background: linear-gradient(
-      to bottom,
-      rgba(13, 13, 13, 0.85) 0%,
-      rgba(13, 13, 13, 0.2) 40%,
-      rgba(13, 13, 13, 0.2) 60%,
-      rgba(13, 13, 13, 0.85) 100%
-    );
+    gap: 0;
+    min-height: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
   .hero__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 28px 20px 30px 20px;
+    order: 1;
     width: 100%;
     max-width: 100%;
+    padding: 28px 20px 24px 20px;
   }
-  .hero__tag {
-    align-self: flex-start;
-    margin-bottom: 0;
-    background: rgba(13, 13, 13, 0.7);
+  .hero__img {
+    position: static;
+    transform: none;
+    order: 2;
+    width: 100%;
+    height: auto;
   }
   .hero__title {
-    font-size: clamp(1.53rem, 3.8vw, 2rem);
-    margin-top: auto;
-    margin-bottom: 16px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-  }
-  .hero__content .btn {
-    align-self: flex-start;
+    font-size: clamp(1.53rem, 6vw, 2rem);
+    margin-bottom: 20px;
   }
 }
 
@@ -529,4 +545,20 @@ img { max-width: 100%; display: block; }
   height: 35px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+/* ===== ACCESSIBILITY ===== */
+:focus-visible {
+  outline: 2px solid var(--clr-fire);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

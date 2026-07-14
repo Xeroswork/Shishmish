@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shish-Mish — Вкусни шашлици, свежи продукти и бърза поръчка в София</title>
   <meta name="description" content="Shish-Mish — шашлик и дюнер от фермерски продукти. Поръчай в София по телефон, Viber или WhatsApp." />
+  <meta name="theme-color" content="#0d0d0d" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+
+  <!-- Open Graph / соц. мрежи -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Shish-Mish — шашлик и дюнер в София" />
+  <meta property="og:description" content="Шашлик и дюнер от фермерски продукти. Приготвено на въглища. Поръчай по телефон, Viber или WhatsApp." />
+  <meta property="og:image" content="assets/images/hero.png" />
+  <meta property="og:locale" content="bg_BG" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="stylesheet" href="fonts.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -17,9 +30,14 @@
         <img src="assets/logo.svg" alt="Shish-Mish" class="logo__img" width="160" height="48" />
       </a>
       <nav class="nav">
-        <a href="#about">За нас</a>
-        <a href="#menu">Меню</a>
-        <a href="#contacts">Контакти</a>
+        <a href="#about" data-i18n="nav_about">За нас</a>
+        <a href="#menu" data-i18n="nav_menu">Меню</a>
+        <a href="#contacts" data-i18n="nav_contacts">Контакти</a>
+        <select class="lang-select" id="lang-select" aria-label="Език / Language / Язык">
+          <option value="bg">Български</option>
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
       </nav>
     </div>
   </header>
@@ -34,9 +52,9 @@
       onerror="this.style.display='none'"
     />
     <div class="hero__content">
-      <p class="hero__tag">🔥 Приготвено на въглища</p>
-      <h1 class="hero__title">Дюнер и шашлик<br/>от фермерски продукти</h1>
-      <a href="#menu" class="btn btn--primary">Виж менюто</a>
+      <p class="hero__tag" data-i18n="hero_tag">🔥 Приготвено на въглища</p>
+      <h1 class="hero__title" data-i18n="hero_title">Дюнер и шашлик<br/>от фермерски продукти</h1>
+      <a href="#menu" class="btn btn--primary" data-i18n="hero_btn">Виж менюто</a>
     </div>
   </section>
 
@@ -45,28 +63,28 @@
     <div class="container">
       <div class="about__grid">
         <div class="about__text">
-          <h2 class="section-title">Нашата концепция</h2>
-          <p>Ние приготвяме сочни шашлици и дюнер, съчетани с уникални домашни сосове, създадени по авторски рецепти. Месото се маринова по собствена технология за максимален вкус и сочност, разработена от майстор с над 20 години опит.</p>
-          <p>Част от подправките, които използваме, се внасят специално от Централна Азия, което придава на нашите ястия автентичен и отличителен вкус.</p>
-          <p>Продуктите, които използваме, са фермерски и се доставят от deli shop „Симбиоза". Това ни позволява да гарантираме постоянна свежест, строг контрол върху качеството и богат, истински вкус във всяка порция.</p>
-          <p class="about__motto"><strong>Без компромиси – това, което ядем ние, предлагаме и на вас!</strong></p>
+          <h2 class="section-title" data-i18n="about_title">Нашата концепция</h2>
+          <p data-i18n="about_p1">Ние приготвяме сочни шашлици и дюнер, съчетани с уникални домашни сосове, създадени по авторски рецепти. Месото се маринова по собствена технология за максимален вкус и сочност, разработена от майстор с над 20 години опит.</p>
+          <p data-i18n="about_p2">Част от подправките, които използваме, се внасят специално от Централна Азия, което придава на нашите ястия автентичен и отличителен вкус.</p>
+          <p data-i18n="about_p3">Продуктите, които използваме, са фермерски и се доставят от deli shop „Симбиоза". Това ни позволява да гарантираме постоянна свежест, строг контрол върху качеството и богат, истински вкус във всяка порция.</p>
+          <p class="about__motto"><strong data-i18n="about_motto">Без компромиси – това, което ядем ние, предлагаме и на вас!</strong></p>
         </div>
         <div class="about__badges">
           <div class="badge">
-            <img src="assets/images/ferm.png" alt="Фермерски продукти" class="badge__img" />
-            <span class="badge__label">Фермерски продукти</span>
+            <img src="assets/images/ferm.png" alt="Фермерски продукти" class="badge__img" loading="lazy" decoding="async" />
+            <span class="badge__label" data-i18n="badge_farm">Фермерски продукти</span>
           </div>
           <div class="badge">
-            <img src="assets/images/coals.png" alt="На въглища" class="badge__img" />
-            <span class="badge__label">На въглища</span>
+            <img src="assets/images/coals.png" alt="На въглища" class="badge__img" loading="lazy" decoding="async" />
+            <span class="badge__label" data-i18n="badge_coals">На въглища</span>
           </div>
           <div class="badge">
-            <img src="assets/images/spices.png" alt="Азиатски подправки" class="badge__img" />
-            <span class="badge__label">Азиатски подправки</span>
+            <img src="assets/images/spices.png" alt="Азиатски подправки" class="badge__img" loading="lazy" decoding="async" />
+            <span class="badge__label" data-i18n="badge_spices">Азиатски подправки</span>
           </div>
           <div class="badge">
-            <img src="assets/images/chef.png" alt="20+ г. опит" class="badge__img" />
-            <span class="badge__label">20+ г. опит</span>
+            <img src="assets/images/chef.png" alt="20+ г. опит" class="badge__img" loading="lazy" decoding="async" />
+            <span class="badge__label" data-i18n="badge_exp">20+ г. опит</span>
           </div>
         </div>
       </div>
@@ -76,44 +94,82 @@
   <!-- MENU -->
   <section class="menu" id="menu">
     <div class="container">
-      <h2 class="section-title center">Меню</h2>
+      <h2 class="section-title center" data-i18n="menu_title">Меню</h2>
 
       <div class="menu__grid">
 
         <!-- Item 1 -->
         <div class="menu-card">
-          <img src="assets/images/kebab.png" alt="Шашлик" class="menu-card__img" />
+          <img src="assets/images/kebab.png" alt="Шашлик" class="menu-card__img" loading="lazy" decoding="async" />
           <div class="menu-card__info">
-            <h3 class="menu-card__name">Шашлик</h3>
-            <p class="menu-card__weight">420 г</p>
-            <p class="menu-card__desc">Сочен шашлик от свински врат (домашна марината)</p>
-            <p class="menu-card__fire">🔥 Приготвен на въглища</p>
+            <h3 class="menu-card__name" data-i18n="item_shashlik_name">Шашлик</h3>
+            <p class="menu-card__weight" data-i18n="item_shashlik_weight">420 г</p>
+            <p class="menu-card__desc" data-i18n="item_shashlik_desc">Сочен шашлик от свински врат (домашна марината)</p>
+            <p class="menu-card__fire" data-i18n="item_shashlik_fire">🔥 Приготвен на въглища</p>
           </div>
           <div class="menu-card__footer">
             <span class="menu-card__price">8 €</span>
-            <div class="qty" data-price="8" data-name="Шашлик">
-              <button class="qty__btn" onclick="changeQty(this, -1)">−</button>
-              <span class="qty__val">0</span>
-              <button class="qty__btn" onclick="changeQty(this, 1)">+</button>
+            <div class="qty" data-price="8" data-name="Шашлик" data-name-key="item_shashlik_name">
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+              <span class="qty__val" aria-live="polite">0</span>
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
             </div>
           </div>
         </div>
 
         <!-- Item 2 -->
         <div class="menu-card">
-          <img src="assets/images/wings.png" alt="Пилешки крилца" class="menu-card__img" />
+          <img src="assets/images/wings.png" alt="Пилешки крилца" class="menu-card__img" loading="lazy" decoding="async" />
           <div class="menu-card__info">
-            <h3 class="menu-card__name">Пилешки крилца</h3>
-            <p class="menu-card__weight">420 г</p>
-            <p class="menu-card__desc">Сочни пилешки крилца в домашна марината</p>
-            <p class="menu-card__fire">🔥 Приготвени на въглища</p>
+            <h3 class="menu-card__name" data-i18n="item_wings_name">Пилешки крилца</h3>
+            <p class="menu-card__weight" data-i18n="item_wings_weight">420 г</p>
+            <p class="menu-card__desc" data-i18n="item_wings_desc">Сочни пилешки крилца в домашна марината</p>
+            <p class="menu-card__fire" data-i18n="item_wings_fire">🔥 Приготвени на въглища</p>
           </div>
           <div class="menu-card__footer">
             <span class="menu-card__price">6.5 €</span>
-            <div class="qty" data-price="6.5" data-name="Пилешки крилца">
-              <button class="qty__btn" onclick="changeQty(this, -1)">−</button>
-              <span class="qty__val">0</span>
-              <button class="qty__btn" onclick="changeQty(this, 1)">+</button>
+            <div class="qty" data-price="6.5" data-name="Пилешки крилца" data-name-key="item_wings_name">
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+              <span class="qty__val" aria-live="polite">0</span>
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="menu-card">
+          <img src="assets/images/chicken.png" alt="Пилешки шашлик" class="menu-card__img" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'" />
+          <div class="menu-card__info">
+            <h3 class="menu-card__name" data-i18n="item_chicken_name">Пилешки шашлик</h3>
+            <p class="menu-card__weight" data-i18n="item_chicken_weight">420 г</p>
+            <p class="menu-card__desc" data-i18n="item_chicken_desc">Сочен пилешки шашлик в домашна марината</p>
+            <p class="menu-card__fire" data-i18n="item_chicken_fire">🔥 Приготвен на въглища</p>
+          </div>
+          <div class="menu-card__footer">
+            <span class="menu-card__price">9 €</span>
+            <div class="qty" data-price="9" data-name="Пилешки шашлик" data-name-key="item_chicken_name">
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+              <span class="qty__val" aria-live="polite">0</span>
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="menu-card">
+          <img src="assets/images/dorado.png" alt="Дорада на въглища" class="menu-card__img" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'" />
+          <div class="menu-card__info">
+            <h3 class="menu-card__name" data-i18n="item_dorado_name">Дорада на въглища</h3>
+            <p class="menu-card__weight" data-i18n="item_dorado_weight">1 бр.</p>
+            <p class="menu-card__desc" data-i18n="item_dorado_desc">Прясна дорада, изпечена на въглища</p>
+            <p class="menu-card__fire" data-i18n="item_dorado_fire">🔥 Приготвена на въглища</p>
+          </div>
+          <div class="menu-card__footer">
+            <span class="menu-card__price">14 €</span>
+            <div class="qty" data-price="14" data-name="Дорада на въглища" data-name-key="item_dorado_name">
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+              <span class="qty__val" aria-live="polite">0</span>
+              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
             </div>
           </div>
         </div>
@@ -121,60 +177,60 @@
       </div>
 
       <!-- Drinks -->
-      <h3 class="drinks-title">Напитки</h3>
+      <h3 class="drinks-title" data-i18n="drinks_title">Напитки</h3>
       <div class="drinks__grid">
         <div class="drink-card">
-          <img src="assets/images/coca.png" alt="Coca-Cola" class="drink-card__img" />
+          <img src="assets/images/coca.png" alt="Coca-Cola" class="drink-card__img" loading="lazy" decoding="async" />
           <span class="drink-card__name">Coca-Cola</span>
           <span class="drink-card__price">2 €</span>
           <div class="qty" data-price="2" data-name="Coca-Cola">
-            <button class="qty__btn" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val">0</span>
-            <button class="qty__btn" onclick="changeQty(this, 1)">+</button>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+            <span class="qty__val" aria-live="polite">0</span>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
           </div>
         </div>
         <div class="drink-card">
-          <img src="assets/images/fanta.png" alt="Fanta" class="drink-card__img" />
+          <img src="assets/images/fanta.png" alt="Fanta" class="drink-card__img" loading="lazy" decoding="async" />
           <span class="drink-card__name">Fanta</span>
           <span class="drink-card__price">2 €</span>
           <div class="qty" data-price="2" data-name="Fanta">
-            <button class="qty__btn" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val">0</span>
-            <button class="qty__btn" onclick="changeQty(this, 1)">+</button>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+            <span class="qty__val" aria-live="polite">0</span>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
           </div>
         </div>
         <div class="drink-card">
-          <img src="assets/images/sprite.png" alt="Sprite" class="drink-card__img" />
+          <img src="assets/images/sprite.png" alt="Sprite" class="drink-card__img" loading="lazy" decoding="async" />
           <span class="drink-card__name">Sprite</span>
           <span class="drink-card__price">2 €</span>
           <div class="qty" data-price="2" data-name="Sprite">
-            <button class="qty__btn" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val">0</span>
-            <button class="qty__btn" onclick="changeQty(this, 1)">+</button>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+            <span class="qty__val" aria-live="polite">0</span>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
           </div>
         </div>
         <div class="drink-card">
-          <img src="assets/images/water.png" alt="Вода" class="drink-card__img" />
-          <span class="drink-card__name">Вода</span>
+          <img src="assets/images/water.png" alt="Вода" class="drink-card__img" loading="lazy" decoding="async" />
+          <span class="drink-card__name" data-i18n="drink_water">Вода</span>
           <span class="drink-card__price">1 €</span>
-          <div class="qty" data-price="1" data-name="Вода">
-            <button class="qty__btn" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val">0</span>
-            <button class="qty__btn" onclick="changeQty(this, 1)">+</button>
+          <div class="qty" data-price="1" data-name="Вода" data-name-key="drink_water">
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
+            <span class="qty__val" aria-live="polite">0</span>
+            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
           </div>
         </div>
       </div>
 
       <!-- Total -->
       <div class="total-bar">
-        <span class="total-bar__label">Общо:</span>
+        <span class="total-bar__label" data-i18n="total_label">Общо:</span>
         <span class="total-bar__amount" id="total">0 €</span>
         <div class="order-btns" id="order-btns" style="display:none">
-          <a id="wa-link" href="#" class="btn btn--whatsapp" target="_blank">
+          <a id="wa-link" href="#" class="btn btn--whatsapp" target="_blank" rel="noopener">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             WhatsApp
           </a>
-          <a id="viber-link" href="#" class="btn btn--viber" target="_blank">
+          <a id="viber-link" href="#" class="btn btn--viber" target="_blank" rel="noopener">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.398.002C8.95-.028 3.214.49 1.03 7.26c-.855 2.677-.944 5.935.022 9.094C2.476 20.38 5.857 22.34 8.73 22.77l-.007 2.872s-.019.5.31.6c.395.12.628-.253.628-.253l1.72-2.283c.577.05 1.145.074 1.697.056 6.237-.195 9.834-3.695 10.368-10.443.595-7.532-2.54-12.44-12.048-13.317zm.065 1.894c8.493.646 11.21 4.832 10.693 11.425-.465 5.847-3.49 8.71-8.836 8.877-1.093.034-2.259-.07-3.374-.303l-.7 1.021 1.23 1.264c-2.15-.37-5.02-1.955-6.17-6.12-.87-3.16-.77-6.09-.026-8.356 1.747-5.43 6.286-7.86 7.183-7.808zm-.4 3.35a.422.422 0 0 0-.003.845c1.53.049 2.764.58 3.699 1.527.935.947 1.431 2.187 1.47 3.727a.422.422 0 0 0 .421.412h.01a.422.422 0 0 0 .413-.432c-.046-1.75-.624-3.193-1.73-4.314-1.108-1.121-2.543-1.717-4.28-1.766zm-3.65 1.266c-.193-.007-.38.073-.491.235-.147.21-.18.502-.09.775.052.159.32.855.62 1.577.302.723.634 1.445.74 1.638.32.581.657.946 1.218 1.167.05.02.102.036.155.048.234.053.39-.033.532-.16.143-.127.284-.29.43-.467.146-.178.283-.37.392-.517.11-.147.15-.234.148-.308a.418.418 0 0 0-.156-.288c-.133-.114-.8-.606-1.002-.734-.202-.128-.374-.133-.53.02-.157.153-.26.278-.384.385-.124.107-.218.14-.351.079-.132-.062-.562-.314-.957-.789-.394-.474-.622-.904-.679-1.048-.056-.143-.034-.253.06-.36.093-.106.217-.234.317-.35.1-.117.185-.245.22-.38.034-.136-.013-.302-.097-.494-.084-.192-.517-1.24-.67-1.555-.112-.233-.237-.35-.425-.357zm3.797.668a.421.421 0 0 0-.004.843c.653.02 1.167.24 1.536.628.37.388.558.907.576 1.564a.421.421 0 0 0 .421.41h.011a.421.421 0 0 0 .41-.432c-.023-.853-.284-1.577-.802-2.121-.518-.544-1.23-.867-2.148-.892zm-1.65 1.262"/></svg>
             Viber
           </a>
@@ -187,23 +243,23 @@
   <!-- CONTACTS -->
   <section class="contacts" id="contacts">
     <div class="container">
-      <h2 class="section-title center">Контакти</h2>
+      <h2 class="section-title center" data-i18n="contacts_title">Контакти</h2>
       <div class="contacts__grid">
         <div class="contact-item">
-          <img src="assets/images/pin.png" alt="Локация" class="contact-item__pin" />
-          <a href="https://maps.app.goo.gl/bxp7TNtxhWRikeHq5" target="_blank" rel="noopener">София, Shish-Mish / Simbiosa</a>
+          <img src="assets/images/pin.png" alt="Локация" class="contact-item__pin" loading="lazy" decoding="async" />
+          <a href="https://maps.app.goo.gl/bxp7TNtxhWRikeHq5" target="_blank" rel="noopener" data-i18n="contact_location">София, Shish-Mish / Simbiosa</a>
         </div>
         <div class="contact-item">
-          <img src="assets/images/phone.png" alt="Телефон" class="contact-item__pin" />
+          <img src="assets/images/phone.png" alt="Телефон" class="contact-item__pin" loading="lazy" decoding="async" />
           <a href="tel:+359897728878">+359 897 728 878</a>
         </div>
         <div class="contact-item">
-          <img src="assets/images/chat.png" alt="Съобщения" class="contact-item__pin" />
-          <span>Поръчки по телефон и съобщения (Viber / WhatsApp)</span>
+          <img src="assets/images/chat.png" alt="Съобщения" class="contact-item__pin" loading="lazy" decoding="async" />
+          <span data-i18n="contact_msg">Поръчки по телефон и съобщения (Viber / WhatsApp)</span>
         </div>
       </div>
       <div class="contacts__actions">
-        <a href="https://wa.me/359897728878" target="_blank" class="btn btn--whatsapp">
+        <a href="https://wa.me/359897728878" target="_blank" rel="noopener" class="btn btn--whatsapp">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp
         </a>
@@ -211,7 +267,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.398.002C8.95-.028 3.214.49 1.03 7.26c-.855 2.677-.944 5.935.022 9.094C2.476 20.38 5.857 22.34 8.73 22.77l-.007 2.872s-.019.5.31.6c.395.12.628-.253.628-.253l1.72-2.283c.577.05 1.145.074 1.697.056 6.237-.195 9.834-3.695 10.368-10.443.595-7.532-2.54-12.44-12.048-13.317zm.065 1.894c8.493.646 11.21 4.832 10.693 11.425-.465 5.847-3.49 8.71-8.836 8.877-1.093.034-2.259-.07-3.374-.303l-.7 1.021 1.23 1.264c-2.15-.37-5.02-1.955-6.17-6.12-.87-3.16-.77-6.09-.026-8.356 1.747-5.43 6.286-7.86 7.183-7.808zm-.4 3.35a.422.422 0 0 0-.003.845c1.53.049 2.764.58 3.699 1.527.935.947 1.431 2.187 1.47 3.727a.422.422 0 0 0 .421.412h.01a.422.422 0 0 0 .413-.432c-.046-1.75-.624-3.193-1.73-4.314-1.108-1.121-2.543-1.717-4.28-1.766zm-3.65 1.266c-.193-.007-.38.073-.491.235-.147.21-.18.502-.09.775.052.159.32.855.62 1.577.302.723.634 1.445.74 1.638.32.581.657.946 1.218 1.167.05.02.102.036.155.048.234.053.39-.033.532-.16.143-.127.284-.29.43-.467.146-.178.283-.37.392-.517.11-.147.15-.234.148-.308a.418.418 0 0 0-.156-.288c-.133-.114-.8-.606-1.002-.734-.202-.128-.374-.133-.53.02-.157.153-.26.278-.384.385-.124.107-.218.14-.351.079-.132-.062-.562-.314-.957-.789-.394-.474-.622-.904-.679-1.048-.056-.143-.034-.253.06-.36.093-.106.217-.234.317-.35.1-.117.185-.245.22-.38.034-.136-.013-.302-.097-.494-.084-.192-.517-1.24-.67-1.555-.112-.233-.237-.35-.425-.357zm3.797.668a.421.421 0 0 0-.004.843c.653.02 1.167.24 1.536.628.37.388.558.907.576 1.564a.421.421 0 0 0 .421.41h.011a.421.421 0 0 0 .41-.432c-.023-.853-.284-1.577-.802-2.121-.518-.544-1.23-.867-2.148-.892zm-1.65 1.262"/></svg>
           Viber
         </a>
-        <a href="tel:+359897728878" class="btn btn--call"><img src="assets/images/phone.png" alt="" class="contact-item__pin" /> Обади се</a>
+        <a href="tel:+359897728878" class="btn btn--call"><img src="assets/images/phone.png" alt="" class="contact-item__pin" loading="lazy" decoding="async" /> <span data-i18n="action_call">Обади се</span></a>
       </div>
     </div>
   </section>
@@ -220,7 +276,7 @@
   <footer class="footer">
     <div class="container">
       <p class="footer__logo"><img src="assets/logo.svg" alt="Shish-Mish" width="130" height="40" /></p>
-      <p class="footer__copy">© 2026 Shish-Mish. Всички права запазени. София, България.</p>
+      <p class="footer__copy" data-i18n="footer_copy">© 2026 Shish-Mish. Всички права запазени. София, България.</p>
     </div>
   </footer>
 
