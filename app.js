@@ -45,7 +45,7 @@ const I18N = {
     footer_copy: '© 2026 Shish-Mish. Всички права запазени. София, България.',
     aria_minus: 'Намали количеството',
     aria_plus: 'Увеличи количеството',
-    order_greeting: 'Здравейте! Искам да поръчам:',
+    order_header: '🔥 Нова поръчка — Shish-Mish',
     order_total: 'Общо:',
   },
 
@@ -93,7 +93,7 @@ const I18N = {
     footer_copy: '© 2026 Shish-Mish. All rights reserved. Sofia, Bulgaria.',
     aria_minus: 'Decrease quantity',
     aria_plus: 'Increase quantity',
-    order_greeting: 'Hello! I would like to order:',
+    order_header: '🔥 New order — Shish-Mish',
     order_total: 'Total:',
   },
 
@@ -141,7 +141,7 @@ const I18N = {
     footer_copy: '© 2026 Shish-Mish. Все права защищены. София, Болгария.',
     aria_minus: 'Уменьшить количество',
     aria_plus: 'Увеличить количество',
-    order_greeting: 'Здравствуйте! Хочу заказать:',
+    order_header: '🔥 Новый заказ — Shish-Mish',
     order_total: 'Итого:',
   },
 };
@@ -182,7 +182,8 @@ function applyLang(lang) {
 
 // ===== CART LOGIC =====
 
-const PHONE = '359897728878';
+// Номер, на който пристигат поръчките (Viber / WhatsApp)
+const PHONE = '359888245737';
 
 // Формат цени: 16.00 -> "16", 14.50 -> "14.5", 6.5 -> "6.5"
 function formatPrice(value) {
@@ -211,7 +212,7 @@ function updateTotal() {
     const qty   = parseInt(qtyEl.querySelector('.qty__val').textContent, 10);
     if (qty > 0) {
       total += price * qty;
-      items.push(`${name} x${qty}`);
+      items.push(`• ${name} × ${qty} — ${formatPrice(price * qty)} €`);
     }
   });
 
@@ -220,11 +221,14 @@ function updateTotal() {
   const orderBtns = document.getElementById('order-btns');
   if (total > 0) {
     orderBtns.style.display = 'flex';
-    const msg = encodeURIComponent(
-      t.order_greeting + '\n' +
-      items.join('\n') +
-      '\n' + t.order_total + ' ' + formatPrice(total) + ' €'
-    );
+    // Красиво форматирана заявка за поръчка
+    const message =
+      t.order_header + '\n' +
+      '━━━━━━━━━━━━━━\n' +
+      items.join('\n') + '\n' +
+      '━━━━━━━━━━━━━━\n' +
+      t.order_total + ' ' + formatPrice(total) + ' €';
+    const msg = encodeURIComponent(message);
     document.getElementById('wa-link').href    = `https://wa.me/${PHONE}?text=${msg}`;
     document.getElementById('viber-link').href = `viber://chat?number=${PHONE}&text=${msg}`;
   } else {
