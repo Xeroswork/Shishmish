@@ -1,19 +1,23 @@
 /* ===== CSS VARIABLES ===== */
 :root {
-  --clr-bg: #0d0d0d;
-  --clr-surface: #161616;
-  --clr-surface2: #1e1e1e;
-  --clr-border: #2a2a2a;
-  --clr-fire: #d95f0a;
-  --clr-gold: #c49a38;
-  --clr-text: #ebebeb;
-  --clr-muted: #787878;
+  --clr-bg: #0a0a0b;
+  --clr-surface: #121214;
+  --clr-surface2: #18181b;
+  --clr-border: rgba(255, 255, 255, 0.07);
+  --clr-border-strong: rgba(255, 255, 255, 0.12);
+  --clr-fire: #f0680f;
+  --clr-fire-soft: #ff8a3d;
+  --clr-gold: #d8b56a;
+  --clr-text: #f2f0ed;
+  --clr-muted: #8a8a93;
   --clr-whatsapp: #25d366;
   --clr-viber: #7360f2;
-  --radius: 14px;
+  --radius: 16px;
   --font-heading: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --transition: 0.2s ease;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --glow-fire: 0 8px 32px rgba(240, 104, 15, 0.28);
+  --surface-grad: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 45%, rgba(255,255,255,0) 100%);
 }
 
 /* ===== RESET ===== */
@@ -21,7 +25,13 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
-  background: var(--clr-bg);
+  /* Дълбоко черно + едва доловими топли отблясъци от жарава */
+  background:
+    radial-gradient(900px 480px at 85% -5%, rgba(240, 104, 15, 0.07), transparent 65%),
+    radial-gradient(700px 500px at -10% 45%, rgba(216, 181, 106, 0.04), transparent 60%),
+    radial-gradient(800px 520px at 60% 110%, rgba(240, 104, 15, 0.05), transparent 65%),
+    var(--clr-bg);
+  background-attachment: fixed;
   color: var(--clr-text);
   line-height: 1.6;
   overflow-x: hidden;
@@ -42,8 +52,9 @@ img { max-width: 100%; display: block; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(14, 11, 7, 0.92);
-  backdrop-filter: blur(12px);
+  background: rgba(10, 10, 11, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  backdrop-filter: blur(20px) saturate(1.4);
   border-bottom: 1px solid var(--clr-border);
 }
 .header__inner {
@@ -63,7 +74,7 @@ img { max-width: 100%; display: block; }
   height: 44px;
   width: auto;
 }
-.nav { display: flex; gap: 24px; }
+.nav { display: flex; align-items: center; gap: 24px; }
 .nav a {
   font-family: var(--font-heading);
   font-size: 0.82rem;
@@ -82,9 +93,9 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--clr-text);
-  background-color: var(--clr-surface2);
-  border: 1px solid var(--clr-border);
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--clr-border-strong);
+  border-radius: 10px;
   padding: 6px 30px 6px 12px;
   cursor: pointer;
   transition: border-color var(--transition);
@@ -108,21 +119,10 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: var(--clr-bg);
+  /* Прозрачен фон -> през hero прозират топлите отблясъци на страницата */
   /* Съдържанието на hero се вписва в границите на сайта (контейнер 960px) */
   padding-left: max(20px, calc((100% - 960px) / 2 + 20px));
   padding-right: max(20px, calc((100% - 960px) / 2 + 20px));
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--clr-bg));
-  z-index: 1;
-  pointer-events: none;
 }
 /* Изображение вдясно, наполовина по-малко.
    mix-blend-mode: lighten слива черния фон на снимката с фона на
@@ -159,11 +159,13 @@ img { max-width: 100%; display: block; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--clr-fire);
-  border: 1px solid var(--clr-fire);
-  padding: 4px 12px;
+  color: var(--clr-fire-soft);
+  background: rgba(240, 104, 15, 0.08);
+  border: 1px solid rgba(240, 104, 15, 0.4);
+  padding: 5px 14px;
   border-radius: 100px;
   margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(240, 104, 15, 0.12);
 }
 .hero__title {
   font-family: var(--font-heading);
@@ -191,30 +193,59 @@ img { max-width: 100%; display: block; }
   text-decoration: none;
 }
 .btn--primary {
-  background: var(--clr-fire);
+  background: linear-gradient(135deg, var(--clr-fire-soft) 0%, var(--clr-fire) 60%, #d4560a 100%);
   color: #fff;
+  box-shadow: var(--glow-fire), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
-.btn--primary:hover { background: #ff7420; transform: translateY(-2px); }
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(240, 104, 15, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
 
-.btn--whatsapp { background: var(--clr-whatsapp); color: #fff; }
-.btn--whatsapp:hover { opacity: 0.9; transform: translateY(-2px); }
+.btn--whatsapp {
+  background: linear-gradient(135deg, #34de74 0%, #1fc55c 100%);
+  color: #fff;
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.btn--whatsapp:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(37, 211, 102, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-.btn--viber { background: var(--clr-viber); color: #fff; }
-.btn--viber:hover { opacity: 0.9; transform: translateY(-2px); }
+.btn--viber {
+  background: linear-gradient(135deg, #8672ff 0%, #6a55e8 100%);
+  color: #fff;
+  box-shadow: 0 8px 28px rgba(115, 96, 242, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.btn--viber:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(115, 96, 242, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-.btn--call { background: #b84a00; color: #fff; border: none; }
-.btn--call:hover { background: #d95f0a; transform: translateY(-2px); }
+.btn--call {
+  background: linear-gradient(135deg, #cf5c10 0%, #a84400 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 28px rgba(207, 92, 16, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.btn--call:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(207, 92, 16, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
 
 /* ===== SECTION TITLE ===== */
 .section-title {
   font-family: var(--font-heading);
   font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--clr-text);
-  margin-bottom: 28px;
+  margin-bottom: 36px;
+}
+/* Огнена чертичка под заглавието — фирмен акцент */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--clr-fire-soft), var(--clr-fire));
+  box-shadow: 0 0 12px rgba(240, 104, 15, 0.5);
 }
 .section-title.center { text-align: center; }
+.section-title.center::after { margin-left: auto; margin-right: auto; }
 
 /* ===== ABOUT ===== */
 .about {
@@ -224,7 +255,7 @@ img { max-width: 100%; display: block; }
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 60px;
-  align-items: start;
+  align-items: center;
 }
 .about__text p {
   color: var(--clr-muted);
@@ -239,7 +270,7 @@ img { max-width: 100%; display: block; }
   gap: 12px;
 }
 .badge {
-  background: #000;
+  background: var(--surface-grad), var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: 16px 12px;
@@ -248,9 +279,13 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.badge:hover { border-color: var(--clr-gold); }
+.badge:hover {
+  border-color: rgba(216, 181, 106, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(216, 181, 106, 0.08);
+}
 .badge__img {
   width: 64px;
   height: 64px;
@@ -269,26 +304,11 @@ img { max-width: 100%; display: block; }
 /* ===== MENU ===== */
 .menu {
   padding: 80px 0;
-  background: var(--clr-surface);
+  /* Лек светъл воал върху тъмния фон + тънки разделителни линии */
+  background: rgba(255, 255, 255, 0.015);
+  border-top: 1px solid var(--clr-border);
+  border-bottom: 1px solid var(--clr-border);
   position: relative;
-}
-.menu::before,
-.menu::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 60px;
-  pointer-events: none;
-  z-index: 1;
-}
-.menu::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--clr-bg), transparent);
-}
-.menu::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--clr-bg), transparent);
 }
 .menu__grid {
   display: grid;
@@ -297,21 +317,25 @@ img { max-width: 100%; display: block; }
   margin-bottom: 48px;
 }
 .menu-card {
-  background: var(--clr-bg);
+  background: var(--surface-grad), var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: border-color var(--transition), transform var(--transition);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.menu-card:hover { border-color: var(--clr-fire); transform: translateY(-4px); }
+.menu-card:hover {
+  border-color: rgba(240, 104, 15, 0.55);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(240, 104, 15, 0.1);
+}
 .menu-card__img {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #000;
 }
 .menu-card__name {
@@ -342,11 +366,25 @@ img { max-width: 100%; display: block; }
   padding-top: 12px;
   border-top: 1px solid var(--clr-border);
 }
-.menu-card__price {
+/* ===== ЦЕНИ — общ „златен" стил ===== */
+.menu-card__price,
+.drink-card__price,
+.total-bar__amount {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
-  font-weight: 900;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  /* Градиентно злато върху текста; color остава fallback */
   color: var(--clr-gold);
+  background: linear-gradient(160deg, #f3ddad 0%, #e2c07c 45%, #c99f52 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.menu-card__price {
+  font-size: 1.7rem;
 }
 
 /* ===== DRINKS ===== */
@@ -366,7 +404,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 40px;
 }
 .drink-card {
-  background: #000;
+  background: var(--surface-grad), var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: 16px;
@@ -374,9 +412,13 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.drink-card:hover { border-color: var(--clr-gold); }
+.drink-card:hover {
+  border-color: rgba(216, 181, 106, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
 .drink-card__img {
   width: 80px;
   height: 110px;
@@ -384,10 +426,7 @@ img { max-width: 100%; display: block; }
 }
 .drink-card__name { font-size: 0.95rem; color: var(--clr-text); }
 .drink-card__price {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--clr-gold);
+  font-size: 1.3rem;
 }
 
 /* ===== QTY CONTROL ===== */
@@ -399,9 +438,9 @@ img { max-width: 100%; display: block; }
 .qty__btn {
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  border: 1px solid var(--clr-border);
-  background: var(--clr-surface2);
+  border-radius: 10px;
+  border: 1px solid var(--clr-border-strong);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--clr-text);
   font-size: 1.2rem;
   font-weight: 700;
@@ -412,7 +451,12 @@ img { max-width: 100%; display: block; }
   transition: all var(--transition);
   line-height: 1;
 }
-.qty__btn:hover { border-color: var(--clr-fire); color: var(--clr-fire); }
+.qty__btn:hover {
+  border-color: var(--clr-fire);
+  color: #fff;
+  background: rgba(240, 104, 15, 0.18);
+  box-shadow: 0 0 14px rgba(240, 104, 15, 0.25);
+}
 .qty__val {
   font-family: var(--font-heading);
   font-size: 1rem;
@@ -423,14 +467,15 @@ img { max-width: 100%; display: block; }
 
 /* ===== TOTAL BAR ===== */
 .total-bar {
-  background: var(--clr-surface2);
-  border: 1px solid var(--clr-border);
+  background: var(--surface-grad), var(--clr-surface2);
+  border: 1px solid var(--clr-border-strong);
   border-radius: var(--radius);
   padding: 20px 24px;
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
 }
 .total-bar__label {
   font-family: var(--font-heading);
@@ -441,10 +486,7 @@ img { max-width: 100%; display: block; }
   color: var(--clr-muted);
 }
 .total-bar__amount {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: var(--clr-gold);
+  font-size: 2.2rem;
   flex: 1;
 }
 .order-btns {
@@ -479,16 +521,23 @@ img { max-width: 100%; display: block; }
 
 /* ===== FOOTER ===== */
 .footer {
-  background: var(--clr-surface);
+  background: rgba(255, 255, 255, 0.015);
   border-top: 1px solid var(--clr-border);
-  padding: 32px 0;
-  text-align: center;
+  padding: 24px 0;
+}
+/* Лого вляво, копирайт вдясно — на един ред, един срещу друг */
+.footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
 }
 .footer__logo {
   font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: 900;
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 .footer__copy {
   font-size: 0.85rem;
@@ -505,8 +554,8 @@ img { max-width: 100%; display: block; }
   .nav a { font-size: 0.78rem; }
   .contacts__actions { flex-direction: column; }
   .contacts__actions .btn { justify-content: center; }
+  .footer .container { justify-content: center; text-align: center; }
   .total-bar { flex-direction: column; align-items: flex-start; }
-  .total-bar__amount { font-size: 2rem; }
 
   /* Hero мобильная версия — стопка: текст горе, снимка долу */
   .hero {
@@ -545,6 +594,36 @@ img { max-width: 100%; display: block; }
   height: 35px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+/* ===== TOAST (известие при копиране на поръчката) ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 120%);
+  max-width: calc(100% - 32px);
+  background: rgba(24, 24, 27, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--clr-text);
+  border: 1px solid var(--clr-viber);
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.4;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+  text-align: center;
+}
+.toast--show {
+  transform: translate(-50%, 0);
+  opacity: 1;
 }
 
 /* ===== ACCESSIBILITY ===== */
