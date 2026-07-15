@@ -47,6 +47,7 @@ const I18N = {
     aria_plus: 'Увеличи количеството',
     order_header: '🔥 Нова поръчка — Shish-Mish',
     order_total: 'Общо:',
+    order_copied: '✅ Поръчката е копирана — поставете я в чата на Viber',
   },
 
   en: {
@@ -95,6 +96,7 @@ const I18N = {
     aria_plus: 'Increase quantity',
     order_header: '🔥 New order — Shish-Mish',
     order_total: 'Total:',
+    order_copied: '✅ Order copied — paste it in the Viber chat',
   },
 
   ru: {
@@ -143,6 +145,7 @@ const I18N = {
     aria_plus: 'Увеличить количество',
     order_header: '🔥 Новый заказ — Shish-Mish',
     order_total: 'Итого:',
+    order_copied: '✅ Заказ скопирован — вставьте его в чат Viber',
   },
 };
 
@@ -185,6 +188,9 @@ function applyLang(lang) {
 // Номер, на който пристигат поръчките (Viber / WhatsApp)
 const PHONE = '359888245737';
 
+// Текущият текст на поръчката (за копиране при клик на Viber)
+let currentOrderText = '';
+
 // Формат цени: 16.00 -> "16", 14.50 -> "14.5", 6.5 -> "6.5"
 function formatPrice(value) {
   return value
@@ -216,7 +222,9 @@ function updateTotal() {
     }
   });
 
-  document.getElementById('total').textContent = formatPrice(total) + ' €';
+  // Знакът € е в отделен span, за да е по-малък и повдигнат (premium стил)
+  document.getElementById('total').innerHTML =
+    formatPrice(total) + ' <span class="price-cur">€</span>';
 
   const orderBtns = document.getElementById('order-btns');
   if (total > 0) {
@@ -228,12 +236,62 @@ function updateTotal() {
       items.join('\n') + '\n' +
       '━━━━━━━━━━━━━━\n' +
       t.order_total + ' ' + formatPrice(total) + ' €';
+    currentOrderText = message;
     const msg = encodeURIComponent(message);
-    document.getElementById('wa-link').href    = `https://wa.me/${PHONE}?text=${msg}`;
-    document.getElementById('viber-link').href = `viber://chat?number=${PHONE}&text=${msg}`;
+    document.getElementById('wa-link').href = `https://wa.me/${PHONE}?text=${msg}`;
+    // Viber не поддържа предварително попълнен текст към конкретен номер,
+    // затова отваряме чат с номера, а текстът се копира в клипборда при клик.
+    document.getElementById('viber-link').href = `viber://chat?number=${PHONE}`;
   } else {
+    currentOrderText = '';
     orderBtns.style.display = 'none';
   }
+}
+
+// ===== VIBER: копиране на поръчката в клипборда при клик =====
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+  }
+  return Promise.resolve(fallbackCopy(text));
+}
+
+function fallbackCopy(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  } catch (e) { /* ignore */ }
+}
+
+let toastTimer = null;
+function showToast(text) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = text;
+  toast.classList.add('toast--show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('toast--show'), 4000);
+}
+
+const viberLink = document.getElementById('viber-link');
+if (viberLink) {
+  viberLink.addEventListener('click', () => {
+    if (!currentOrderText) return;
+    const t = I18N[currentLang] || I18N[DEFAULT_LANG];
+    copyToClipboard(currentOrderText);
+    showToast(t.order_copied);
+  });
 }
 
 // ===== LANGUAGE SWITCHER =====
