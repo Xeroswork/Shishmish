@@ -1,0 +1,7 @@
+# TODO(owner): заменить example.com на реальный домен
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /assets/images/src/
+
+Sitemap: https://example.com/sitemap.xml

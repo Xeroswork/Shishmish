@@ -1,0 +1,22 @@
+# Заголовки для Netlify (на Vercel/GitHub Pages файл просто игнорируется).
+# Шрифты и картинки меняются редко — кэшируем надолго.
+# HTML/CSS/JS без хешей в имени — кэш короткий, чтобы правки доходили сразу.
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/images/*
+  Cache-Control: public, max-age=2592000
+
+/assets/icons/*
+  Cache-Control: public, max-age=2592000
+
+/js/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/style.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,285 +1,670 @@
-<!DOCTYPE html>
-<html lang="bg">
+<!doctype html>
+<html lang="bg" class="no-js">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shish-Mish — Вкусни шашлици, свежи продукти и бърза поръчка в София</title>
-  <meta name="description" content="Shish-Mish — шашлик и дюнер от фермерски продукти. Поръчай в София по телефон, Viber или WhatsApp." />
-  <meta name="theme-color" content="#0a0a0b" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta_title">Shish-Mish — шашлик и дюнер на живи въглища в София</title>
+  <meta name="description" data-i18n-attr="content:meta_desc" content="Шашлик и дюнер от фермерски продукти, по авторска марината, изпечени на въглища. Поръчайте в София през WhatsApp, Viber или по телефона.">
+  <meta name="theme-color" content="#0b0908">
+  <meta name="color-scheme" content="dark">
 
-  <!-- Favicon -->
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <!-- TODO(owner): после покупки домена добавить <link rel="canonical" href="https://ДОМЕН/">
+       и заменить https://example.com в og:url, og:image, sitemap.xml, robots.txt -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Shish-Mish">
+  <meta property="og:title" data-i18n-attr="content:meta_title" content="Shish-Mish — шашлик и дюнер на живи въглища в София">
+  <meta property="og:description" data-i18n-attr="content:meta_desc" content="Шашлик и дюнер от фермерски продукти, по авторска марината, изпечени на въглища. Поръчайте в София през WhatsApp, Viber или по телефона.">
+  <meta property="og:locale" data-i18n-attr="content:og_locale" content="bg_BG">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="https://example.com/assets/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Open Graph / соц. мрежи -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Shish-Mish — шашлик и дюнер в София" />
-  <meta property="og:description" content="Шашлик и дюнер от фермерски продукти. Приготвено на въглища. Поръчай по телефон, Viber или WhatsApp." />
-  <meta property="og:image" content="assets/images/hero.png" />
-  <meta property="og:locale" content="bg_BG" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
 
-  <link rel="stylesheet" href="fonts.css" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- Шрифты — раньше стилей: к первой раскладке они уже загружены (font-display: optional → нет сдвигов вёрстки) -->
+  <link rel="preload" href="assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <!-- Hero-картинка — главный элемент (LCP) на десктопе; на телефоне им является текст, поэтому там без предзагрузки -->
+  <link rel="preload" as="image" type="image/avif" fetchpriority="high" media="(min-width: 900px)"
+        imagesrcset="assets/images/hero-480.avif 480w, assets/images/hero-720.avif 720w, assets/images/hero-960.avif 960w, assets/images/hero-1280.avif 1280w"
+        imagesizes="(min-width: 1400px) 600px, (min-width: 900px) 46vw, min(92vw, 560px)">
+
+
+  <!-- Обычные скрипты с defer (не модули): так сайт работает и при открытии файла двойным кликом.
+       Порядок важен: данные → переводы → корзина → эффекты → запуск. -->
+  <script defer src="js/menu-data.js"></script>
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+
+  <!-- TODO(owner): добавить "url", "image" (после домена), "address.streetAddress" и "openingHoursSpecification" -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Shish-Mish",
+    "description": "Шашлик и дюнер от фермерски продукти, изпечени на въглища. Поръчки през WhatsApp, Viber и по телефона.",
+    "telephone": "+359888245737",
+    "servesCuisine": ["Barbecue", "Grill"],
+    "priceRange": "€",
+    "hasMap": "https://maps.app.goo.gl/bxp7TNtxhWRikeHq5",
+    "address": { "@type": "PostalAddress", "addressLocality": "Sofia", "addressCountry": "BG" },
+    "geo": { "@type": "GeoCoordinates", "latitude": 42.6541032, "longitude": 23.3293025 },
+    "hasMenu": {
+      "@type": "Menu",
+      "hasMenuSection": [
+        {
+          "@type": "MenuSection",
+          "name": "Грил",
+          "hasMenuItem": [
+            { "@type": "MenuItem", "name": "Шашлик", "description": "420 г", "offers": { "@type": "Offer", "price": "8", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Пилешки крилца", "description": "420 г", "offers": { "@type": "Offer", "price": "6.5", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Пилешки шашлик", "description": "420 г", "offers": { "@type": "Offer", "price": "9", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Дорада на въглища", "description": "1 бр.", "offers": { "@type": "Offer", "price": "14", "priceCurrency": "EUR" } }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Напитки",
+          "hasMenuItem": [
+            { "@type": "MenuItem", "name": "Coca-Cola", "offers": { "@type": "Offer", "price": "2", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Fanta", "offers": { "@type": "Offer", "price": "2", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Sprite", "offers": { "@type": "Offer", "price": "2", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Вода", "offers": { "@type": "Offer", "price": "1", "priceCurrency": "EUR" } }
+          ]
+        }
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
+  <!-- ===== Спрайт иконок ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-flame" viewBox="1 6 38 38"><path fill="currentColor" d="M16 38 C9 33 7 25 10 18 C11.5 13.5 14.5 11 16 8 C16 12.5 18.5 14.5 21 13 C18.5 18.5 22 22 22 26.5 C23.5 22 24 17.5 22 13.5 C26.5 16.5 29 23.5 27.5 30.5 C29 27.5 29.5 22.5 28 18 C32 22.5 33.5 30 30.5 36 C29 39 24.5 42 20.5 42 C19.3 42 17.7 40.7 16 38 Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></symbol>
+    <symbol id="i-plate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7.07 17 2.51-7.39L21 11.07z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+    <symbol id="i-viber" viewBox="0 0 24 24"><path fill="currentColor" d="M11.4 0C9.473.028 5.333.344 3.02 2.467 1.302 4.187.696 6.7.633 9.817c-.063 3.11-.14 8.937 5.478 10.516h.005l-.004 2.412s-.037.977.61 1.177c.777.242 1.234-.5 1.98-1.302.407-.437 1-1.058 1.428-1.526 3.836.323 6.782-.416 7.117-.525.775-.252 5.155-.812 5.868-6.632.735-6.02-.353-9.83-2.32-11.55l-.01-.005c-.595-.547-2.987-2.28-8.335-2.303 0 0-.395-.025-1.043-.003zm.058 1.685c.55-.01.9.008.9.008 4.52.02 6.685 1.38 7.19 1.842 1.66 1.44 2.51 4.842 1.89 9.85l-.002.008c-.6 4.86-4.15 5.17-4.804 5.383-.28.09-2.872.734-6.13.522 0 0-2.43 2.93-3.187 3.69-.118.12-.257.167-.35.144-.13-.033-.167-.187-.166-.412l.02-4.008c-4.755-1.32-4.477-6.282-4.425-8.88.052-2.598.542-4.746 1.99-6.187 1.933-1.77 5.443-2.04 7.083-2.05zm.29 2.925c-.132-.005-.24.1-.246.23-.006.13.1.243.23.25.006 0 3.135.147 4.53 3.35.556 1.276.556 2.516.556 2.516 0 .132.107.24.24.24.132 0 .24-.108.24-.24 0 0 .004-1.35-.6-2.73-1.52-3.487-4.906-3.615-4.95-3.616zm.083 1.46c-.13.003-.234.11-.232.24.003.13.11.234.24.232.004 0 1.44.02 2.36.977.63.657.72 1.605.72 1.605.01.13.124.228.254.216.13-.01.228-.125.217-.255 0 0-.104-1.163-.845-1.94-1.11-1.16-2.7-1.075-2.714-1.075zm.114 1.517c-.13.005-.232.114-.227.244.005.13.114.232.244.227.004 0 .565-.024.98.4.203.207.302.517.302.86 0 .132.107.24.24.24.13 0 .24-.108.24-.24 0-.43-.13-.83-.44-1.147-.56-.573-1.53-.583-1.54-.583zm.573 1.16c-.24-.005-.44.18-.446.42-.005.24.18.44.42.446.014 0 .32.006.48.176.16.17.155.5.155.5-.005.24.18.44.42.446.24.005.44-.18.446-.42.001-.03.02-.706-.404-1.15-.42-.44-1.06-.437-1.06-.437zm-4.7-2.606c-.288.006-.52.24-.514.53.006.29.24.52.53.514h.003c.05 0 .55-.007 1.02.36.462.363.694 1.117.694 1.117.09.276.386.427.662.338.276-.09.427-.386.338-.662 0 0-.32-1.02-1.045-1.588-.72-.564-1.51-.62-1.68-.62-.008 0-.014 0-.02.001z"/></symbol>
+  </svg>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header__inner">
-      <a href="#" class="logo">
-        <img src="assets/logo.svg" alt="Shish-Mish" class="logo__img" width="160" height="48" />
+  <a class="skip-link" href="#main" data-i18n="skip_link">Към съдържанието</a>
+
+  <!-- ===== ШАПКА ===== -->
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="logo" href="#top" data-i18n-attr="aria-label:logo_home" aria-label="Shish-Mish — към началото">
+        <img src="assets/logo.svg" alt="" width="220" height="44">
       </a>
-      <nav class="nav">
-        <a href="#about" data-i18n="nav_about">За нас</a>
-        <a href="#menu" data-i18n="nav_menu">Меню</a>
-        <a href="#contacts" data-i18n="nav_contacts">Контакти</a>
-        <select class="lang-select" id="lang-select" aria-label="Език / Language / Язык">
-          <option value="bg">Български</option>
-          <option value="en">English</option>
-          <option value="ru">Русский</option>
-        </select>
+
+      <nav class="nav" data-i18n-attr="aria-label:nav_label" aria-label="Основна навигация">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#about" data-i18n="nav_about">За нас</a></li>
+          <li><a class="nav__link" href="#process" data-i18n="nav_process">Как готвим</a></li>
+          <li><a class="nav__link" href="#menu" data-i18n="nav_menu">Меню</a></li>
+          <li><a class="nav__link" href="#faq" data-i18n="nav_faq">Въпроси</a></li>
+          <li><a class="nav__link" href="#contacts" data-i18n="nav_contacts">Контакти</a></li>
+        </ul>
       </nav>
+
+      <div class="header__actions">
+        <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang_label" aria-label="Език на сайта">
+          <button type="button" data-lang="bg" lang="bg" aria-pressed="true">BG<span class="visually-hidden"> — Български</span></button>
+          <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="visually-hidden"> — English</span></button>
+          <button type="button" data-lang="ru" lang="ru" aria-pressed="false">RU<span class="visually-hidden"> — Русский</span></button>
+        </div>
+        <a class="btn btn--primary header__call" href="tel:+359888245737" data-i18n-attr="aria-label:header_call" aria-label="Обади се">
+          <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-i18n="header_call">Обади се</span>
+        </a>
+        <button type="button" class="icon-btn burger" data-open-mnav aria-controls="mnav" aria-expanded="false" data-i18n-attr="aria-label:menu_open" aria-label="Отвори менюто">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero__overlay"></div>
-    <img
-      src="assets/images/hero.png"
-      alt="Шашлик от Shish-Mish"
-      class="hero__img"
-      onerror="this.style.display='none'"
-    />
-    <div class="hero__content">
-      <p class="hero__tag" data-i18n="hero_tag">🔥 Приготвено на въглища</p>
-      <h1 class="hero__title" data-i18n="hero_title">Дюнер и шашлик<br/>от фермерски продукти</h1>
-      <a href="#menu" class="btn btn--primary" data-i18n="hero_btn">Виж менюто</a>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about__grid">
-        <div class="about__text">
-          <h2 class="section-title" data-i18n="about_title">Нашата концепция</h2>
-          <p data-i18n="about_p1">Ние приготвяме сочни шашлици и дюнер, съчетани с уникални домашни сосове, създадени по авторски рецепти. Месото се маринова по собствена технология за максимален вкус и сочност, разработена от майстор с над 20 години опит.</p>
-          <p data-i18n="about_p2">Част от подправките, които използваме, се внасят специално от Централна Азия, което придава на нашите ястия автентичен и отличителен вкус.</p>
-          <p data-i18n="about_p3">Продуктите, които използваме, са фермерски и се доставят от deli shop „Симбиоза". Това ни позволява да гарантираме постоянна свежест, строг контрол върху качеството и богат, истински вкус във всяка порция.</p>
-          <p class="about__motto"><strong data-i18n="about_motto">Без компромиси – това, което ядем ние, предлагаме и на вас!</strong></p>
+  <!-- ===== МОБИЛЬНОЕ МЕНЮ ===== -->
+  <dialog class="mnav" id="mnav" data-i18n-attr="aria-label:nav_label" aria-label="Основна навигация">
+    <div class="mnav__inner">
+      <div class="mnav__top">
+        <img src="assets/logo.svg" alt="Shish-Mish" width="180" height="36">
+        <button type="button" class="icon-btn" data-close data-i18n-attr="aria-label:menu_close" aria-label="Затвори менюто">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <ul class="mnav__list">
+        <li style="--i:0"><a href="#about" data-i18n="nav_about">За нас</a></li>
+        <li style="--i:1"><a href="#process" data-i18n="nav_process">Как готвим</a></li>
+        <li style="--i:2"><a href="#menu" data-i18n="nav_menu">Меню</a></li>
+        <li style="--i:3"><a href="#faq" data-i18n="nav_faq">Въпроси</a></li>
+        <li style="--i:4"><a href="#contacts" data-i18n="nav_contacts">Контакти</a></li>
+      </ul>
+      <div class="mnav__bottom">
+        <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang_label" aria-label="Език на сайта">
+          <button type="button" data-lang="bg" lang="bg" aria-pressed="true">BG<span class="visually-hidden"> — Български</span></button>
+          <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="visually-hidden"> — English</span></button>
+          <button type="button" data-lang="ru" lang="ru" aria-pressed="false">RU<span class="visually-hidden"> — Русский</span></button>
         </div>
-        <div class="about__badges">
-          <div class="badge">
-            <img src="assets/images/ferm.png" alt="Фермерски продукти" class="badge__img" loading="lazy" decoding="async" />
-            <span class="badge__label" data-i18n="badge_farm">Фермерски продукти</span>
-          </div>
-          <div class="badge">
-            <img src="assets/images/coals.png" alt="На въглища" class="badge__img" loading="lazy" decoding="async" />
-            <span class="badge__label" data-i18n="badge_coals">На въглища</span>
-          </div>
-          <div class="badge">
-            <img src="assets/images/spices.png" alt="Азиатски подправки" class="badge__img" loading="lazy" decoding="async" />
-            <span class="badge__label" data-i18n="badge_spices">Азиатски подправки</span>
-          </div>
-          <div class="badge">
-            <img src="assets/images/chef.png" alt="20+ г. опит" class="badge__img" loading="lazy" decoding="async" />
-            <span class="badge__label" data-i18n="badge_exp">20+ г. опит</span>
-          </div>
+        <div class="mnav__ctas">
+          <a class="btn btn--primary" href="tel:+359888245737"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-i18n="header_call">Обади се</span></a>
+          <a class="btn btn--wa" href="https://wa.me/359888245737" data-wa target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
         </div>
       </div>
     </div>
-  </section>
+  </dialog>
 
-  <!-- MENU -->
-  <section class="menu" id="menu">
-    <div class="container">
-      <h2 class="section-title center" data-i18n="menu_title">Меню</h2>
+  <main id="main">
 
-      <div class="menu__grid">
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <canvas class="hero__sparks" aria-hidden="true"></canvas>
 
-        <!-- Item 1 -->
-        <div class="menu-card">
-          <img src="assets/images/kebab.png" alt="Шашлик" class="menu-card__img" loading="lazy" decoding="async" />
-          <div class="menu-card__info">
-            <h3 class="menu-card__name" data-i18n="item_shashlik_name">Шашлик</h3>
-            <p class="menu-card__weight" data-i18n="item_shashlik_weight">420 г</p>
-            <p class="menu-card__desc" data-i18n="item_shashlik_desc">Сочен шашлик от свински врат (домашна марината)</p>
-            <p class="menu-card__fire" data-i18n="item_shashlik_fire">🔥 Приготвен на въглища</p>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="pill hero__eyebrow"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-flame"/></svg><span data-i18n="hero_eyebrow">Приготвено на въглища · София</span></p>
+          <h1 class="hero__title" id="hero-title" data-i18n="hero_title">Шашлик и дюнер, изпечени на <em>живи въглища</em></h1>
+          <p class="hero__sub" data-i18n="hero_sub">Фермерско месо, авторска марината и истински огън. Изберете от менюто — поръчката стига до нас с два клика през WhatsApp или Viber.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary btn--lg" href="#menu" data-magnetic>
+              <span data-i18n="hero_cta_menu">Виж менюто</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+            <a class="btn btn--wa btn--lg" href="https://wa.me/359888245737" data-wa target="_blank" rel="noopener" data-magnetic>
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg><span data-i18n="hero_cta_wa">Поръчай в WhatsApp</span>
+            </a>
           </div>
-          <div class="menu-card__footer">
-            <span class="menu-card__price">8 <span class="price-cur">€</span></span>
-            <div class="qty" data-price="8" data-name="Шашлик" data-name-key="item_shashlik_name">
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-              <span class="qty__val" aria-live="polite">0</span>
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-            </div>
-          </div>
+          <ul class="trust">
+            <li class="pill"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-flame"/></svg><span data-i18n="trust_coals">На въглища</span></li>
+            <li class="pill"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-leaf"/></svg><span data-i18n="trust_farm">Фермерски продукти</span></li>
+            <li class="pill"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-i18n="trust_exp">20+ години опит</span></li>
+          </ul>
         </div>
 
-        <!-- Item 2 -->
-        <div class="menu-card">
-          <img src="assets/images/wings.png" alt="Пилешки крилца" class="menu-card__img" loading="lazy" decoding="async" />
-          <div class="menu-card__info">
-            <h3 class="menu-card__name" data-i18n="item_wings_name">Пилешки крилца</h3>
-            <p class="menu-card__weight" data-i18n="item_wings_weight">420 г</p>
-            <p class="menu-card__desc" data-i18n="item_wings_desc">Сочни пилешки крилца в домашна марината</p>
-            <p class="menu-card__fire" data-i18n="item_wings_fire">🔥 Приготвени на въглища</p>
-          </div>
-          <div class="menu-card__footer">
-            <span class="menu-card__price">6.5 <span class="price-cur">€</span></span>
-            <div class="qty" data-price="6.5" data-name="Пилешки крилца" data-name-key="item_wings_name">
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-              <span class="qty__val" aria-live="polite">0</span>
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="menu-card">
-          <img src="assets/images/chicken.png" alt="Пилешки шашлик" class="menu-card__img" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'" />
-          <div class="menu-card__info">
-            <h3 class="menu-card__name" data-i18n="item_chicken_name">Пилешки шашлик</h3>
-            <p class="menu-card__weight" data-i18n="item_chicken_weight">420 г</p>
-            <p class="menu-card__desc" data-i18n="item_chicken_desc">Сочен пилешки шашлик в домашна марината</p>
-            <p class="menu-card__fire" data-i18n="item_chicken_fire">🔥 Приготвен на въглища</p>
-          </div>
-          <div class="menu-card__footer">
-            <span class="menu-card__price">9 <span class="price-cur">€</span></span>
-            <div class="qty" data-price="9" data-name="Пилешки шашлик" data-name-key="item_chicken_name">
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-              <span class="qty__val" aria-live="polite">0</span>
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Item 4 -->
-        <div class="menu-card">
-          <img src="assets/images/dorado.png" alt="Дорада на въглища" class="menu-card__img" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'" />
-          <div class="menu-card__info">
-            <h3 class="menu-card__name" data-i18n="item_dorado_name">Дорада на въглища</h3>
-            <p class="menu-card__weight" data-i18n="item_dorado_weight">1 бр.</p>
-            <p class="menu-card__desc" data-i18n="item_dorado_desc">Прясна дорада, изпечена на въглища</p>
-            <p class="menu-card__fire" data-i18n="item_dorado_fire">🔥 Приготвена на въглища</p>
-          </div>
-          <div class="menu-card__footer">
-            <span class="menu-card__price">14 <span class="price-cur">€</span></span>
-            <div class="qty" data-price="14" data-name="Дорада на въглища" data-name-key="item_dorado_name">
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-              <span class="qty__val" aria-live="polite">0</span>
-              <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Drinks -->
-      <h3 class="drinks-title" data-i18n="drinks_title">Напитки</h3>
-      <div class="drinks__grid">
-        <div class="drink-card">
-          <img src="assets/images/coca.png" alt="Coca-Cola" class="drink-card__img" loading="lazy" decoding="async" />
-          <span class="drink-card__name">Coca-Cola</span>
-          <span class="drink-card__price">2 <span class="price-cur">€</span></span>
-          <div class="qty" data-price="2" data-name="Coca-Cola">
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val" aria-live="polite">0</span>
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-          </div>
-        </div>
-        <div class="drink-card">
-          <img src="assets/images/fanta.png" alt="Fanta" class="drink-card__img" loading="lazy" decoding="async" />
-          <span class="drink-card__name">Fanta</span>
-          <span class="drink-card__price">2 <span class="price-cur">€</span></span>
-          <div class="qty" data-price="2" data-name="Fanta">
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val" aria-live="polite">0</span>
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-          </div>
-        </div>
-        <div class="drink-card">
-          <img src="assets/images/sprite.png" alt="Sprite" class="drink-card__img" loading="lazy" decoding="async" />
-          <span class="drink-card__name">Sprite</span>
-          <span class="drink-card__price">2 <span class="price-cur">€</span></span>
-          <div class="qty" data-price="2" data-name="Sprite">
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val" aria-live="polite">0</span>
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-          </div>
-        </div>
-        <div class="drink-card">
-          <img src="assets/images/water.png" alt="Вода" class="drink-card__img" loading="lazy" decoding="async" />
-          <span class="drink-card__name" data-i18n="drink_water">Вода</span>
-          <span class="drink-card__price">1 <span class="price-cur">€</span></span>
-          <div class="qty" data-price="1" data-name="Вода" data-name-key="drink_water">
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_minus" aria-label="Намали количеството" onclick="changeQty(this, -1)">−</button>
-            <span class="qty__val" aria-live="polite">0</span>
-            <button type="button" class="qty__btn" data-i18n-aria-label="aria_plus" aria-label="Увеличи количеството" onclick="changeQty(this, 1)">+</button>
-          </div>
+        <div class="hero__visual">
+          <div class="hero__glow" aria-hidden="true"></div>
+          <picture>
+            <source type="image/avif" srcset="assets/images/hero-480.avif 480w, assets/images/hero-720.avif 720w, assets/images/hero-960.avif 960w, assets/images/hero-1280.avif 1280w" sizes="(min-width: 1400px) 600px, (min-width: 900px) 46vw, min(92vw, 560px)">
+            <source type="image/webp" srcset="assets/images/hero-480.webp 480w, assets/images/hero-720.webp 720w, assets/images/hero-960.webp 960w, assets/images/hero-1280.webp 1280w" sizes="(min-width: 1400px) 600px, (min-width: 900px) 46vw, min(92vw, 560px)">
+            <img class="hero__img" src="assets/images/hero-720.webp" width="1536" height="1024" decoding="async"
+                 data-i18n-attr="alt:hero_img_alt" alt="Шишове шашлик над жарава — емблемата на Shish-Mish">
+          </picture>
         </div>
       </div>
 
-      <!-- Total -->
-      <div class="total-bar">
-        <span class="total-bar__label" data-i18n="total_label">Общо:</span>
-        <span class="total-bar__amount" id="total">0 <span class="price-cur">€</span></span>
-        <div class="order-btns" id="order-btns" style="display:none">
-          <a id="wa-link" href="#" class="btn btn--whatsapp" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </a>
-          <a id="viber-link" href="#" class="btn btn--viber" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 0C9.473.028 5.333.344 3.02 2.467 1.302 4.187.696 6.7.633 9.817c-.063 3.11-.14 8.937 5.478 10.516h.005l-.004 2.412s-.037.977.61 1.177c.777.242 1.234-.5 1.98-1.302.407-.437 1-1.058 1.428-1.526 3.836.323 6.782-.416 7.117-.525.775-.252 5.155-.812 5.868-6.632.735-6.02-.353-9.83-2.32-11.55l-.01-.005c-.595-.547-2.987-2.28-8.335-2.303 0 0-.395-.025-1.043-.003zm.058 1.685c.55-.01.9.008.9.008 4.52.02 6.685 1.38 7.19 1.842 1.66 1.44 2.51 4.842 1.89 9.85l-.002.008c-.6 4.86-4.15 5.17-4.804 5.383-.28.09-2.872.734-6.13.522 0 0-2.43 2.93-3.187 3.69-.118.12-.257.167-.35.144-.13-.033-.167-.187-.166-.412l.02-4.008c-4.755-1.32-4.477-6.282-4.425-8.88.052-2.598.542-4.746 1.99-6.187 1.933-1.77 5.443-2.04 7.083-2.05zm.29 2.925c-.132-.005-.24.1-.246.23-.006.13.1.243.23.25.006 0 3.135.147 4.53 3.35.556 1.276.556 2.516.556 2.516 0 .132.107.24.24.24.132 0 .24-.108.24-.24 0 0 .004-1.35-.6-2.73-1.52-3.487-4.906-3.615-4.95-3.616zm.083 1.46c-.13.003-.234.11-.232.24.003.13.11.234.24.232.004 0 1.44.02 2.36.977.63.657.72 1.605.72 1.605.01.13.124.228.254.216.13-.01.228-.125.217-.255 0 0-.104-1.163-.845-1.94-1.11-1.16-2.7-1.075-2.714-1.075zm.114 1.517c-.13.005-.232.114-.227.244.005.13.114.232.244.227.004 0 .565-.024.98.4.203.207.302.517.302.86 0 .132.107.24.24.24.13 0 .24-.108.24-.24 0-.43-.13-.83-.44-1.147-.56-.573-1.53-.583-1.54-.583zm.573 1.16c-.24-.005-.44.18-.446.42-.005.24.18.44.42.446.014 0 .32.006.48.176.16.17.155.5.155.5-.005.24.18.44.42.446.24.005.44-.18.446-.42.001-.03.02-.706-.404-1.15-.42-.44-1.06-.437-1.06-.437zm-4.7-2.606c-.288.006-.52.24-.514.53.006.29.24.52.53.514h.003c.05 0 .55-.007 1.02.36.462.363.694 1.117.694 1.117.09.276.386.427.662.338.276-.09.427-.386.338-.662 0 0-.32-1.02-1.045-1.588-.72-.564-1.51-.62-1.68-.62-.008 0-.014 0-.02.001z"/></svg>
-            Viber
-          </a>
-        </div>
-      </div>
+      <a class="scroll-hint" href="#about">
+        <span class="scroll-hint__mouse" aria-hidden="true"></span>
+        <span data-i18n="scroll_hint">Надолу</span>
+      </a>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- CONTACTS -->
-  <section class="contacts" id="contacts">
-    <div class="container">
-      <h2 class="section-title center" data-i18n="contacts_title">Контакти</h2>
-      <div class="contacts__grid">
-        <div class="contact-item">
-          <img src="assets/images/pin.png" alt="Локация" class="contact-item__pin" loading="lazy" decoding="async" />
-          <a href="https://maps.app.goo.gl/bxp7TNtxhWRikeHq5" target="_blank" rel="noopener" data-i18n="contact_location">София, Shish-Mish / Simbiosa</a>
+    <!-- ===== БЕГУЩАЯ СТРОКА (декоративная) ===== -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee">
+        <div class="marquee__track">
+          <ul class="marquee__list">
+            <li data-i18n-attr="data-label:mq_1" data-label="Шашлик"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_2" data-label="На въглища"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_3" data-label="Фермерски продукти"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_4" data-label="Авторска марината"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_5" data-label="Специи от Централна Азия"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_6" data-label="Дюнер"><svg class="icon"><use href="#i-flame"/></svg></li>
+          </ul>
+          <ul class="marquee__list">
+            <li data-i18n-attr="data-label:mq_1" data-label="Шашлик"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_2" data-label="На въглища"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_3" data-label="Фермерски продукти"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_4" data-label="Авторска марината"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_5" data-label="Специи от Централна Азия"><svg class="icon"><use href="#i-flame"/></svg></li>
+            <li data-i18n-attr="data-label:mq_6" data-label="Дюнер"><svg class="icon"><use href="#i-flame"/></svg></li>
+          </ul>
         </div>
-        <div class="contact-item">
-          <img src="assets/images/phone.png" alt="Телефон" class="contact-item__pin" loading="lazy" decoding="async" />
-          <a href="tel:+359888245737">+359 888 245 737</a>
-        </div>
-        <div class="contact-item">
-          <img src="assets/images/chat.png" alt="Съобщения" class="contact-item__pin" loading="lazy" decoding="async" />
-          <span data-i18n="contact_msg">Поръчки по телефон и съобщения (Viber / WhatsApp)</span>
-        </div>
-      </div>
-      <div class="contacts__actions">
-        <a href="https://wa.me/359888245737" target="_blank" rel="noopener" class="btn btn--whatsapp">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp
-        </a>
-        <a href="viber://chat?number=359888245737" class="btn btn--viber">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 0C9.473.028 5.333.344 3.02 2.467 1.302 4.187.696 6.7.633 9.817c-.063 3.11-.14 8.937 5.478 10.516h.005l-.004 2.412s-.037.977.61 1.177c.777.242 1.234-.5 1.98-1.302.407-.437 1-1.058 1.428-1.526 3.836.323 6.782-.416 7.117-.525.775-.252 5.155-.812 5.868-6.632.735-6.02-.353-9.83-2.32-11.55l-.01-.005c-.595-.547-2.987-2.28-8.335-2.303 0 0-.395-.025-1.043-.003zm.058 1.685c.55-.01.9.008.9.008 4.52.02 6.685 1.38 7.19 1.842 1.66 1.44 2.51 4.842 1.89 9.85l-.002.008c-.6 4.86-4.15 5.17-4.804 5.383-.28.09-2.872.734-6.13.522 0 0-2.43 2.93-3.187 3.69-.118.12-.257.167-.35.144-.13-.033-.167-.187-.166-.412l.02-4.008c-4.755-1.32-4.477-6.282-4.425-8.88.052-2.598.542-4.746 1.99-6.187 1.933-1.77 5.443-2.04 7.083-2.05zm.29 2.925c-.132-.005-.24.1-.246.23-.006.13.1.243.23.25.006 0 3.135.147 4.53 3.35.556 1.276.556 2.516.556 2.516 0 .132.107.24.24.24.132 0 .24-.108.24-.24 0 0 .004-1.35-.6-2.73-1.52-3.487-4.906-3.615-4.95-3.616zm.083 1.46c-.13.003-.234.11-.232.24.003.13.11.234.24.232.004 0 1.44.02 2.36.977.63.657.72 1.605.72 1.605.01.13.124.228.254.216.13-.01.228-.125.217-.255 0 0-.104-1.163-.845-1.94-1.11-1.16-2.7-1.075-2.714-1.075zm.114 1.517c-.13.005-.232.114-.227.244.005.13.114.232.244.227.004 0 .565-.024.98.4.203.207.302.517.302.86 0 .132.107.24.24.24.13 0 .24-.108.24-.24 0-.43-.13-.83-.44-1.147-.56-.573-1.53-.583-1.54-.583zm.573 1.16c-.24-.005-.44.18-.446.42-.005.24.18.44.42.446.014 0 .32.006.48.176.16.17.155.5.155.5-.005.24.18.44.42.446.24.005.44-.18.446-.42.001-.03.02-.706-.404-1.15-.42-.44-1.06-.437-1.06-.437zm-4.7-2.606c-.288.006-.52.24-.514.53.006.29.24.52.53.514h.003c.05 0 .55-.007 1.02.36.462.363.694 1.117.694 1.117.09.276.386.427.662.338.276-.09.427-.386.338-.662 0 0-.32-1.02-1.045-1.588-.72-.564-1.51-.62-1.68-.62-.008 0-.014 0-.02.001z"/></svg>
-          Viber
-        </a>
-        <a href="tel:+359888245737" class="btn btn--call"><img src="assets/images/phone.png" alt="" class="contact-item__pin" loading="lazy" decoding="async" /> <span data-i18n="action_call">Обади се</span></a>
       </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+    <!-- ===== О НАС ===== -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about__head reveal">
+          <p class="eyebrow" data-i18n="about_eyebrow">Нашата концепция</p>
+          <h2 class="h2" id="about-title" data-i18n="about_title">Месо, огън и време. <em>Без компромиси.</em></h2>
+          <p class="lead" data-i18n="about_lead">Готвим шашлик и дюнер така, както бихме ги приготвили за себе си: от фермерски продукти, по авторска рецепта и само на въглища.</p>
+        </div>
+
+        <div class="bento">
+          <article class="card bento__card bento__card--master reveal">
+            <svg class="bento__deco" aria-hidden="true"><use href="#i-flame"/></svg>
+            <div class="stat">
+              <span class="stat__num" data-count-to="20" data-count-suffix="+">20+</span>
+              <span class="stat__label" data-i18n="stat_years">години опит</span>
+            </div>
+            <h3 data-i18n="about_master_title">Майстор с 20+ години опит</h3>
+            <p data-i18n="about_master_text">Технологията на мариноване е разработена от майстор с над 20 години опит — за максимален вкус и сочност.</p>
+          </article>
+
+          <article class="card bento__card bento__card--farm reveal" style="--d:1">
+            <div class="stat">
+              <span class="stat__num" data-count-to="100" data-count-suffix="%">100%</span>
+              <span class="stat__label" data-i18n="stat_farm">фермерски продукти</span>
+            </div>
+            <h3 data-i18n="about_farm_title">Фермерски продукти от „Симбиоза“</h3>
+            <p data-i18n="about_farm_text">Продуктите идват от deli shop „Симбиоза“ — постоянна свежест и строг контрол на качеството във всяка порция.</p>
+          </article>
+
+          <article class="card bento__card bento__card--marinade reveal" style="--d:2">
+            <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#i-droplet"/></svg></span>
+            <h3 data-i18n="about_marinade_title">Собствена марината</h3>
+            <p data-i18n="about_marinade_text">Месото се маринова по собствена технология, а домашните сосове се правят по авторски рецепти.</p>
+          </article>
+
+          <article class="card bento__card bento__card--spices reveal" style="--d:3">
+            <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg></span>
+            <h3 data-i18n="about_spices_title">Специи от Централна Азия</h3>
+            <p data-i18n="about_spices_text">Част от подправките внасяме специално от Централна Азия — оттам идва автентичният, отличителен вкус.</p>
+          </article>
+        </div>
+
+        <figure class="manifesto reveal">
+          <div class="manifesto__zero">
+            <span class="stat__num" data-count-from="100" data-count-to="0">0</span>
+            <span class="stat__label" data-i18n="stat_compromise">компромиси</span>
+          </div>
+          <div>
+            <blockquote><p data-i18n="manifesto">Без компромиси — това, което ядем ние, предлагаме и на вас.</p></blockquote>
+            <figcaption data-i18n="manifesto_cite">екипът на Shish-Mish</figcaption>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== КАК ГОТОВИМ ===== -->
+    <section class="section process" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="process_eyebrow">От фермата до масата</p>
+          <h2 class="h2" id="process-title" data-i18n="process_title">Как готвим</h2>
+          <p class="lead" data-i18n="process_lead">Пет стъпки, които не прескачаме — нито една.</p>
+        </header>
+
+        <div class="steps-wrap">
+        <div class="steps__track" aria-hidden="true"></div>
+        <div class="steps__fuse" aria-hidden="true"></div>
+        <div class="steps__spark" aria-hidden="true"></div>
+        <ol class="steps" role="list">
+
+          <li class="step reveal">
+            <div class="step__media">
+              <picture>
+                <source type="image/avif" srcset="assets/images/ferm-200.avif 200w, assets/images/ferm-400.avif 400w" sizes="80px">
+                <img src="assets/images/ferm-200.webp" width="1327" height="1326" alt="" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <span class="step__num">01</span>
+            <h3 data-i18n="step1_title">Фермерско месо</h3>
+            <p data-i18n="step1_text">Подбираме продукти от deli shop „Симбиоза“.</p>
+          </li>
+          <li class="step reveal" style="--d:1">
+            <div class="step__media">
+              <picture>
+                <source type="image/avif" srcset="assets/images/chef-200.avif 200w, assets/images/chef-400.avif 400w" sizes="80px">
+                <img src="assets/images/chef-200.webp" width="489" height="656" alt="" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <span class="step__num">02</span>
+            <h3 data-i18n="step2_title">Авторска марината</h3>
+            <p data-i18n="step2_text">Маринова се по собствена технология, създадена от майстор с 20+ години опит.</p>
+          </li>
+          <li class="step reveal" style="--d:2">
+            <div class="step__media">
+              <picture>
+                <source type="image/avif" srcset="assets/images/spices-200.avif 200w, assets/images/spices-400.avif 400w" sizes="80px">
+                <img src="assets/images/spices-200.webp" width="1316" height="634" alt="" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <span class="step__num">03</span>
+            <h3 data-i18n="step3_title">Специи</h3>
+            <p data-i18n="step3_text">Подправки, внесени специално от Централна Азия.</p>
+          </li>
+          <li class="step reveal" style="--d:3">
+            <div class="step__media">
+              <picture>
+                <source type="image/avif" srcset="assets/images/coals-200.avif 200w, assets/images/coals-400.avif 400w" sizes="80px">
+                <img src="assets/images/coals-200.webp" width="1000" height="484" alt="" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <span class="step__num">04</span>
+            <h3 data-i18n="step4_title">На въглища</h3>
+            <p data-i18n="step4_text">Печем само на въглища — заради дима, коричката и сочността.</p>
+          </li>
+          <li class="step reveal" style="--d:4">
+            <div class="step__media"><svg class="icon" aria-hidden="true"><use href="#i-plate"/></svg></div>
+            <span class="step__num">05</span>
+            <h3 data-i18n="step5_title">На вашата маса</h3>
+            <p data-i18n="step5_text">Поръчвате през WhatsApp, Viber или по телефона — и готово.</p>
+          </li>
+        </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== МЕНЮ (карточки рендерятся из js/menu-data.js) ===== -->
+    <section class="section menu" id="menu" aria-labelledby="menu-title" data-filter="all">
+      <div class="container">
+        <div class="menu__head">
+          <header class="section-head reveal">
+            <p class="eyebrow" data-i18n="menu_eyebrow">Направо от жарава</p>
+            <h2 class="h2" id="menu-title" data-i18n="menu_title">Меню</h2>
+            <p class="lead" data-i18n="menu_sub">Добавете ястия в кошницата — ще съберем поръчката ви в готово съобщение.</p>
+          </header>
+          <div class="chips reveal" role="group" data-i18n-attr="aria-label:filter_label" aria-label="Филтър на менюто">
+            <button type="button" data-filter="all" aria-pressed="true" data-i18n="filter_all">Всичко</button>
+            <button type="button" data-filter="grill" aria-pressed="false" data-i18n="filter_grill">Грил</button>
+            <button type="button" data-filter="drinks" aria-pressed="false" data-i18n="filter_drinks">Напитки</button>
+          </div>
+        </div>
+
+        <div class="menu__group" data-group="grill">
+          <h3 class="group-title" data-i18n="grill_title">Грил</h3>
+          <div class="dish-grid" id="grill-grid"></div>
+        </div>
+
+        <div class="menu__group" data-group="drinks">
+          <h3 class="group-title" id="drinks-title" data-i18n="drinks_title">Напитки</h3>
+          <div class="drinks-row" id="drinks-row" role="region" aria-labelledby="drinks-title" tabindex="0"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== КАК ЗАКАЗАТЬ ===== -->
+    <section class="section how" id="how" aria-labelledby="how-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="how_eyebrow">Лесно и бързо</p>
+          <h2 class="h2" id="how-title" data-i18n="how_title">Как да поръчате</h2>
+        </header>
+        <ol class="how__grid" role="list">
+          <li class="card how__step reveal">
+            <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#i-cursor"/></svg></span>
+            <h3 data-i18n="how1_title">Изберете ястия</h3>
+            <p data-i18n="how1_text">Добавете от менюто каквото ви се хапва — сумата се смята автоматично.</p>
+          </li>
+          <li class="card how__step reveal" style="--d:1">
+            <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span>
+            <h3 data-i18n="how2_title">Натиснете WhatsApp или Viber</h3>
+            <p data-i18n="how2_text">Сайтът сглобява готово съобщение с цялата ви поръчка.</p>
+          </li>
+          <li class="card how__step reveal" style="--d:2">
+            <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <h3 data-i18n="how3_title">Потвърдете с нас</h3>
+            <p data-i18n="how3_text">Изпратете съобщението и ще уточним детайлите заедно.</p>
+          </li>
+        </ol>
+        <aside class="card how__note reveal">
+          <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="#i-viber"/></svg></span>
+          <div>
+            <h3 data-i18n="how_viber_title">Защо с Viber има една стъпка повече?</h3>
+            <p data-i18n="how_viber_text">В WhatsApp текстът се попълва сам. Viber не позволява това, затова копираме поръчката в клипборда — остава само да я поставите в чата.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section faq" id="faq" aria-labelledby="faq-title">
+      <div class="container faq__grid">
+        <header class="faq__head reveal">
+          <p class="eyebrow" data-i18n="faq_eyebrow">Въпроси</p>
+          <h2 class="h2" id="faq-title" data-i18n="faq_title">Често задавани въпроси</h2>
+        </header>
+        <div class="faq__list reveal">
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q1">Как да поръчам?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a1">Добавете ястия в кошницата, отворете я и натиснете WhatsApp или Viber — съобщението с поръчката е готово. Можете и просто да ни се обадите на +359 888 245 737.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q2">С какво се различават WhatsApp и Viber?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a2">WhatsApp отваря чат с нас и попълва текста на поръчката автоматично. Viber отваря чат с нас, а текстът се копира в клипборда — поставете го и изпратете.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q3">Откъде са продуктите?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a3">Използваме фермерски продукти от deli shop „Симбиоза“. Част от подправките внасяме специално от Централна Азия.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q4">На какво готвите?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a4">На въглища. Месото се маринова по собствена технология, разработена от майстор с над 20 години опит.</p>
+          </details>
+          <!-- TODO(owner): ответ про доставку (есть ли, зона, стоимость) — заменить faq_a5 в js/i18n.js -->
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q5">Доставяте ли?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a5">Свържете се с нас по телефона или в съобщение — ще ви кажем актуалните условия.</p>
+          </details>
+          <!-- TODO(owner): часы работы — заменить faq_a6 в js/i18n.js -->
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q6">Какво е работното време?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a6">Обадете се или ни пишете — ще ви кажем кога работим днес.</p>
+          </details>
+          <!-- TODO(owner): способы оплаты (наличные, карта…) — заменить faq_a7 в js/i18n.js -->
+          <details class="faq-item" name="faq">
+            <summary><span data-i18n="faq_q7">Как се плаща?</span><span class="faq-item__icon" aria-hidden="true"><svg class="icon icon--sm"><use href="#i-plus"/></svg></span></summary>
+            <p data-i18n="faq_a7">Начинът на плащане се уточнява при потвърждаване на поръчката.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="section contacts" id="contacts" aria-labelledby="contacts-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow" data-i18n="contacts_eyebrow">Свържете се с нас</p>
+          <h2 class="h2" id="contacts-title" data-i18n="contacts_title">Контакти</h2>
+        </header>
+
+        <div class="contacts__grid">
+          <div class="card phone-card reveal">
+            <div>
+              <p class="phone-card__label" data-i18n="phone_label">Телефон за поръчки</p>
+              <a class="phone-big" href="tel:+359888245737">+359 888 245 737</a>
+              <div class="phone-card__row">
+                <a class="btn btn--primary" href="tel:+359888245737" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-i18n="header_call">Обади се</span></a>
+                <button type="button" class="btn btn--ghost" data-copy-phone><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span data-i18n="copy_phone">Копирай номера</span></button>
+              </div>
+            </div>
+            <p class="phone-card__lead" data-i18n="contacts_lead">Поръчки по телефона и в съобщения — WhatsApp или Viber.</p>
+          </div>
+
+          <ul class="channels" role="list">
+            <li>
+              <a class="card channel channel--wa reveal" href="https://wa.me/359888245737" data-wa target="_blank" rel="noopener">
+                <span class="channel__icon"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+                <div><h3>WhatsApp</h3><p data-i18n="card_wa_text">Пишете ни — поръчката от кошницата се попълва автоматично.</p></div>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="card channel channel--viber reveal" style="--d:1" href="viber://chat?number=359888245737" data-viber>
+                <span class="channel__icon"><svg class="icon" aria-hidden="true"><use href="#i-viber"/></svg></span>
+                <div><h3>Viber</h3><p data-i18n="card_viber_text">Отваря чат с нас; поръчката се копира за поставяне.</p></div>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="card channel channel--call reveal" style="--d:2" href="tel:+359888245737">
+                <span class="channel__icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></span>
+                <div><h3 data-i18n="card_call_title">Обаждане</h3><p data-i18n="card_call_text">Поръчайте направо по телефона.</p></div>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+              </a>
+            </li>
+          </ul>
+
+          <div class="card map-card reveal">
+            <div class="map-card__info">
+              <div class="info-list">
+                <div class="info-row">
+                  <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                  <div><p class="info-row__label" data-i18n="location_label">Локация</p><p class="info-row__value" data-i18n="location_value">София · Shish-Mish / Simbiosa</p></div>
+                </div>
+                <!-- TODO(owner): точный адрес (улица, номер) — добавить строку в location_value для трёх языков -->
+                <!-- TODO(owner): часы работы — заменить hours_value в js/i18n.js -->
+                <div class="info-row">
+                  <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
+                  <div><p class="info-row__label" data-i18n="hours_label">Работно време</p><p class="info-row__value" data-i18n="hours_value">Обадете се за актуалното работно време.</p></div>
+                </div>
+              </div>
+              <div class="map-card__actions">
+                <a class="btn btn--ghost" href="https://maps.app.goo.gl/bxp7TNtxhWRikeHq5" target="_blank" rel="noopener">
+                  <span data-i18n="open_maps">Отвори в Google Maps</span><svg class="icon icon--sm" aria-hidden="true"><use href="#i-external"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="map">
+              <div class="map__placeholder">
+                <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                <button type="button" class="btn btn--primary" data-map-load><span data-i18n="show_map">Покажи картата</span></button>
+                <p data-i18n="map_note">Картата се зарежда от Google само след натискане.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ФИНАЛЬНЫЙ ПРИЗЫВ ===== -->
+    <section class="cta-section" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta reveal">
+          <div class="embers" aria-hidden="true"></div>
+          <h2 id="cta-title" data-i18n="cta_title">Гладни? Въглищата вече горят <span aria-hidden="true">🔥</span></h2>
+          <p data-i18n="cta_text">Изберете от менюто и изпратете поръчката с два клика.</p>
+          <div class="cta__actions">
+            <a class="btn btn--primary btn--lg" href="#menu" data-magnetic><span data-i18n="hero_cta_menu">Виж менюто</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <a class="btn btn--wa btn--lg" href="https://wa.me/359888245737" data-wa target="_blank" rel="noopener" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg><span data-i18n="hero_cta_wa">Поръчай в WhatsApp</span></a>
+            <a class="btn btn--ghost btn--lg" href="tel:+359888245737"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-i18n="header_call">Обади се</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== ФУТЕР ===== -->
+  <footer class="site-footer">
     <div class="container">
-      <p class="footer__logo"><img src="assets/logo.svg" alt="Shish-Mish" width="130" height="40" /></p>
-      <p class="footer__copy" data-i18n="footer_copy">© 2026 Shish-Mish. Всички права запазени. София, България.</p>
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.svg" alt="Shish-Mish" width="180" height="36" loading="lazy">
+          <p data-i18n="footer_tagline">Шашлик и дюнер на въглища от фермерски продукти.</p>
+        </div>
+        <nav data-i18n-attr="aria-label:footer_nav" aria-label="Навигация">
+          <h2 class="footer__title" data-i18n="footer_nav">Навигация</h2>
+          <ul class="footer__list">
+            <li><a href="#about" data-i18n="nav_about">За нас</a></li>
+            <li><a href="#process" data-i18n="nav_process">Как готвим</a></li>
+            <li><a href="#menu" data-i18n="nav_menu">Меню</a></li>
+            <li><a href="#faq" data-i18n="nav_faq">Въпроси</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2 class="footer__title" data-i18n="footer_contacts">Контакти</h2>
+          <ul class="footer__list">
+            <li><a href="tel:+359888245737"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-phone"/></svg>+359 888 245 737</a></li>
+            <li><a href="https://wa.me/359888245737" data-wa target="_blank" rel="noopener"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a></li>
+            <li><a href="viber://chat?number=359888245737" data-viber><svg class="icon icon--sm" aria-hidden="true"><use href="#i-viber"/></svg>Viber</a></li>
+            <li><a href="https://maps.app.goo.gl/bxp7TNtxhWRikeHq5" target="_blank" rel="noopener"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="city">София, България</span></a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer__title" data-i18n="footer_lang">Език</h2>
+          <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang_label" aria-label="Език на сайта">
+            <button type="button" data-lang="bg" lang="bg" aria-pressed="true">BG<span class="visually-hidden"> — Български</span></button>
+            <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="visually-hidden"> — English</span></button>
+            <button type="button" data-lang="ru" lang="ru" aria-pressed="false">RU<span class="visually-hidden"> — Русский</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© <span data-year>2026</span> Shish-Mish. <span data-i18n="footer_rights">Всички права запазени.</span></p>
+        <a class="to-top" href="#top"><span data-i18n="back_to_top">Нагоре</span><svg class="icon icon--sm" aria-hidden="true"><use href="#i-arrow-up"/></svg></a>
+      </div>
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- ===== КОРЗИНА ===== -->
+  <button type="button" class="cart-fab" data-open-cart aria-haspopup="dialog" aria-controls="cart" inert>
+    <span class="cart-fab__icon"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span class="cart-count" aria-hidden="true">0</span></span>
+    <span class="cart-fab__sum" aria-hidden="true">0 €</span>
+  </button>
+
+  <button type="button" class="cart-bar" data-open-cart aria-haspopup="dialog" aria-controls="cart" inert>
+    <span class="cart-bar__label" aria-hidden="true"></span>
+    <span class="cart-bar__go" aria-hidden="true"><span data-i18n="cart_checkout">Поръчай</span><svg class="icon icon--sm"><use href="#i-arrow-right"/></svg></span>
+  </button>
+
+  <dialog class="cart" id="cart" aria-labelledby="cart-title" data-empty>
+    <div class="cart__panel">
+      <header class="cart__head">
+        <h2 id="cart-title" data-i18n="cart_title">Вашата поръчка</h2>
+        <button type="button" class="icon-btn" data-close data-i18n-attr="aria-label:cart_close" aria-label="Затвори кошницата">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </header>
+
+      <div class="cart__body">
+        <div class="cart__empty">
+          <svg class="icon" aria-hidden="true"><use href="#i-flame"/></svg>
+          <h3 data-i18n="cart_empty_title">Кошницата е празна</h3>
+          <p data-i18n="cart_empty_text">Добавете нещо от менюто — въглищата вече горят.</p>
+          <a class="btn btn--primary" href="#menu"><span data-i18n="cart_to_menu">Към менюто</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ul class="cart__list" id="cart-list" role="list"></ul>
+      </div>
+
+      <footer class="cart__foot">
+        <div class="cart__total"><span data-i18n="cart_total">Общо</span><strong class="price" id="cart-total">0<span class="price__cur">€</span></strong></div>
+        <details class="cart__preview">
+          <summary><svg class="icon icon--sm" aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="cart_preview">Преглед на съобщението</span></summary>
+          <pre id="cart-preview-text"></pre>
+        </details>
+        <p class="cart__via" data-i18n="cart_send_via">Изпратете поръчката през</p>
+        <div class="cart__actions">
+          <a class="btn btn--wa" href="https://wa.me/359888245737" data-wa target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <a class="btn btn--viber" href="viber://chat?number=359888245737" data-viber><svg class="icon" aria-hidden="true"><use href="#i-viber"/></svg>Viber</a>
+          <a class="btn btn--ghost" href="tel:+359888245737"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-i18n="order_call">Обади се</span></a>
+        </div>
+        <p class="cart__hint" data-i18n="viber_hint">Viber: текстът се копира автоматично — просто го поставете в чата.</p>
+        <button type="button" class="link-btn" id="cart-clear" data-i18n="cart_clear">Изчисти кошницата</button>
+      </footer>
+
+      <div class="toast-host" aria-live="polite"></div>
+    </div>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <p class="visually-hidden" id="cart-live" aria-live="polite"></p>
 </body>
 </html>
